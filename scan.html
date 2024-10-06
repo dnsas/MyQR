@@ -7,19 +7,37 @@
     <script src="https://cdn.rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
     <script src="https://kit.fontawesome.com/f79850fb33.js" crossorigin="anonymous"></script>
     <style>
+        body {
+            margin: 0; /* Supprimer les marges par défaut */
+            padding: 0; /* Supprimer le padding par défaut */
+            overflow: hidden; /* Empêche le défilement */
+        }
         #preview {
-            width: 100%;
-            height: auto;
-            border: 1px solid #ccc;
+            width: 100vw; /* Prend toute la largeur de la fenêtre */
+            height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            object-fit: cover; /* Assure que le contenu du vidéo couvre tout l'espace */
         }
         #cameraSelector {
-            margin: 10px 0;
+            position: absolute; /* Positionner le sélecteur de caméra */
+            top: 10px; /* Positionner à 10px du haut */
+            left: 10px; /* Positionner à 10px de gauche */
+            z-index: 10; /* Assurer qu'il soit au-dessus du vidéo */
+            background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+            border-radius: 5px; /* Arrondir les coins */
+            padding: 5px; /* Padding intérieur */
+        }
+        #result {
+            position: absolute; /* Positionner le résultat */
+            bottom: 10px; /* Positionner à 10px du bas */
+            left: 10px; /* Positionner à 10px de gauche */
+            color: white; /* Couleur du texte */
+            z-index: 10; /* Assurer qu'il soit au-dessus du vidéo */
         }
     </style>
 </head>
 <body>
     <select id="cameraSelector"></select>
-    <video id="preview"></video>
+    <video id="preview" autoplay></video>
     <div id="result"></div>
 
     <script>
