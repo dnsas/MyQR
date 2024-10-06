@@ -8,46 +8,67 @@
     <script src="https://kit.fontawesome.com/f79850fb33.js" crossorigin="anonymous"></script>
     <style>
         body {
-            margin: 0; /* Supprimer les marges par défaut */
-            padding: 0; /* Supprimer le padding par défaut */
-            overflow: hidden; /* Empêche le défilement */
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Couleur de fond sombre pour le contraste */
         }
         #preview {
-            width: 100vw; /* Prend toute la largeur de la fenêtre */
-            height: 100vh; /* Prend toute la hauteur de la fenêtre */
-            object-fit: cover; /* Assure que le contenu du vidéo couvre tout l'espace */
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
         }
         #cameraSelector {
-            position: absolute; /* Positionner le sélecteur de caméra */
-            top: 10px; /* Positionner à 10px du haut */
-            left: 10px; /* Positionner à 10px de gauche */
-            z-index: 10; /* Assurer qu'il soit au-dessus du vidéo */
-            background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
-            border-radius: 5px; /* Arrondir les coins */
-            padding: 5px; /* Padding intérieur */
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
         }
         #result {
-            position: absolute; /* Positionner le résultat */
-            bottom: 10px; /* Positionner à 10px du bas */
-            left: 10px; /* Positionner à 10px de gauche */
-            color: white; /* Couleur du texte */
-            z-index: 10; /* Assurer qu'il soit au-dessus du vidéo */
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%; /* Largeur de 80% de l'écran */
+            background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent noir */
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+            z-index: 10;
+        }
+        #result p {
+            margin: 0;
+            font-weight: bold;
+            color: #00ff88; /* Vert fluo pour les données du QR */
         }
     </style>
 </head>
 <body>
     <select id="cameraSelector"></select>
     <video id="preview" autoplay></video>
-    <div id="result"></div>
+    <div id="result" style="display: none;">
+        <h2>Résultat du Scan</h2>
+        <p id="qrData"></p> <!-- Pour afficher les données du QR Code -->
+    </div>
 
     <script>
         const scanner = new Instascan.Scanner({ 
             video: document.getElementById('preview') 
         });
         const cameraSelector = document.getElementById('cameraSelector');
+        const resultDiv = document.getElementById('result');
+        const qrData = document.getElementById('qrData');
 
         scanner.addListener('scan', function(content) {
-            document.getElementById('result').innerText = 'Données : ' + content;
+            qrData.innerText = content; // Affiche les données scannées
+            resultDiv.style.display = 'block'; // Affiche le conteneur des résultats
             console.log('Données : ', content);
             scanner.stop(); // Arrête le scanner après un scan réussi
         });
