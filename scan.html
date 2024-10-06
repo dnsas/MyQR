@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner QR Code 2</title>
+    <script src="https://cdn.rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script src="https://kit.fontawesome.com/f79850fb33.js" crossorigin="anonymous"></script>
+    <style>
+        #preview {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+        #cameraSelector {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scanner un QR Code 3</h1>
+    <select id="cameraSelector"></select>
+    <video id="preview"></video>
+    <div id="result"></div>
+
+    <script>
+        const scanner = new Instascan.Scanner({ 
+            video: document.getElementById('preview') 
+        });
+        const cameraSelector = document.getElementById('cameraSelector');
+
+        scanner.addListener('scan', function(content) {
+            document.getElementById('result').innerText = 'Données : ' + content;
+            console.log('Données : ', content);
+            scanner.stop(); // Arrête le scanner après un scan réussi
+        });
+
+        Instascan.Camera.getCameras()
+            .then(cameras => {
+                if (cameras.length > 0) {
+                    cameras.forEach((camera, index) => {
+                        const option = document.createElement('option');
+                        option.value = index;
+                        option.text = camera.label || `Caméra ${index + 1}`;
+                        cameraSelector.add(option);
+                    });
+                    cameraSelector.addEventListener('change', function() {
+                        scanner.stop(); // Arrête le scanner avant de changer de caméra
+                        scanner.start(cameras[cameraSelector.value]);
+                    });
+                    // Démarre la première caméra par défaut
+                    scanner.start(cameras[cameraSelector.value]);
+                } else {
+                    console.error('Aucune caméra trouvée.');
+                }
+            })
+            .catch(e => console.error('Erreur : ', e));
+    </script>
+</body>
+</html>
