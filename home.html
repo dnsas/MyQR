@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
     <script src="https://kit.fontawesome.com/f79850fb33.js" crossorigin="anonymous"></script>
-    <script src="qrcode.min.js"></script>
-    <script src="monqr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.1/qrious.min.js"></script>
 </head>
 <body>
     <section class="connexion">
@@ -22,90 +21,108 @@
             <i class="fa-solid fa-signature"></i>
         </div>
         <div class="input-box">
-            <input type="text" placeholder=" Ma Classe" class="classe">
+            <input type="text" placeholder="Ma Classe" class="classe">
             <i class="fa-solid fa-users"></i>
         </div>
 
-        <button class="login-btn">Envoyer</button>
+        <button class="login-btn" onclick="generateQRCode()">Envoyer</button>
 
         <div id="current_date"></div>
         
-        <div class="qr_code"></div>
-
+        <div class="qr_code" style="display:none;">
+            <canvas id="qrCanvas"></canvas>
+        </div>
     </section>
-<div class="scan">
-    <style>
-        /* Styles pour le fond de la pop-up */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            background-color: rgba(0, 0, 0, 0.1); /* Couleur de fond semi-transparente */
-            backdrop-filter: blur(20px); /* Ajoute un effet de flou */
-        }
-        
-        /* Styles pour le contenu de la pop-up */
-        .popup {
-            color: white;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            z-index: 1001;
-            width: 80vw; /* 80% de la largeur de l'écran */
-            height: 50vh; /* 80% de la hauteur de l'écran */
-            background-color: rgba(0, 0, 0, 0.1); /* Couleur de fond semi-transparente */
-            backdrop-filter: blur(20px); /* Ajoute un effet de flou */
-        }
-        .popup h2 {
-            padding:15px ;
-        }
 
-        
+    <div class="scan">
+        <style>
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                z-index: 1000;
+                backdrop-filter: blur(20px);
+            }
+            .popup {
+                color: white;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                z-index: 1001;
+                width: 80vw;
+                height: 50vh;
+                background-color: rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(20px);
+            }
+            .popup h2 {
+                padding: 15px;
+            }
+            .close {
+                cursor: pointer;
+                color: red;
+                float: right;
+                font-size: 20px;
+            }
+        </style>
 
-        .close {
-            cursor: pointer;
-            color: red;
-            float: right;
-            font-size: 20px;
-        }
-    </style>
-</head>
-<body>
+        <a href="#" onclick="openPopup(); return false;">
+            <button>
+                <img src="scans.png" alt="Scanner QR Code">
+            </button>
+        </a>
 
-<a href="#" onclick="openPopup(); return false;">
-    <button>
-        <img src="scans.png" alt="Scanner QR Code">
-    </button>
-</a>
-
-<div class="overlay" id="overlay" onclick="closePopup()">
-    <div class="popup" onclick="event.stopPropagation();">
-        <span class="close" onclick="closePopup();">&times;</span>
-        <h2>Scanner Un QR Code</h2>
-        <iframe src="https://dnsas.github.io/MyQR/scan.html" width="100%" height="400px"></iframe>
+        <div class="overlay" id="overlay" onclick="closePopup()">
+            <div class="popup" onclick="event.stopPropagation();">
+                <span class="close" onclick="closePopup();">&times;</span>
+                <h2>Scanner Un QR Code</h2>
+                <iframe src="https://dnsas.github.io/MyQR/scan.html" width="100%" height="400px"></iframe>
+            </div>
+        </div>
     </div>
-</div>
 
-<script>
-function openPopup() {
-    document.getElementById('overlay').style.display = 'block';
-}
+    <script>
+        function generateQRCode() {
+            const nom = document.querySelector('.nom').value;
+            const prenom = document.querySelector('.prenom').value;
+            const classe = document.querySelector('.classe').value;
+            const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}`;
 
-function closePopup() {
-    document.getElementById('overlay').style.display = 'none';
-}
-</script>
-</div>
+            const canvas = document.getElementById('qrCanvas');
+            const qr = new QRious({
+                element: canvas,
+                value: qrData,
+                size: 300,
+            });
 
 
+            const logo = new Image();
+            logo.src = 'logo.png'; 
+            logo.onload = function() {
+                const ctx = canvas.getContext('2d');
+                const logoSize = 60; 
+                const x = (canvas.width / 2) - (logoSize / 2);
+                const y = (canvas.height / 2) - (logoSize / 2);
+                ctx.drawImage(logo, x, y, logoSize, logoSize);
+            };
+
+            document.querySelector('.qr_code').style.display = 'block';
+        }
+
+        function openPopup() {
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
