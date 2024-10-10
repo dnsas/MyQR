@@ -158,3 +158,11 @@ div.scan img:hover{
 .qr_code {
     display: none; /* Masquer par défaut */
 }
+
+
+.qr_code canvas{
+    padding-left: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
