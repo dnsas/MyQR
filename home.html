@@ -29,8 +29,9 @@
 
         <div id="current_date"></div>
         
-        <div class="qr_code">
+        <div class="qr_code" style="display:none;">
             <canvas id="qrCanvas"></canvas>
+            <button id="downloadBtn" style="display:none;" onclick="downloadQRCode()"><i class="fa-solid fa-download"></i></button>
         </div>
     </section>
 
@@ -53,14 +54,13 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                background-color: white;
+                background-color: rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(20px);
                 padding: 20px;
                 border-radius: 8px;
                 z-index: 1001;
                 width: 80vw;
                 height: 50vh;
-                background-color: rgba(0, 0, 0, 0.1);
-                backdrop-filter: blur(20px);
             }
             .popup h2 {
                 padding: 15px;
@@ -102,7 +102,6 @@
                 size: 300,
             });
 
-
             const logo = new Image();
             logo.src = 'logo.png'; 
             logo.onload = function() {
@@ -114,6 +113,15 @@
             };
 
             document.querySelector('.qr_code').style.display = 'block';
+            document.getElementById('downloadBtn').style.display = 'block';
+        }
+
+        function downloadQRCode() {
+            const canvas = document.getElementById('qrCanvas');
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'qrcode.png';
+            link.click();
         }
 
         function openPopup() {
