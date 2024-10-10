@@ -158,3 +158,15 @@ div.scan img:hover{
 .qr_code canvas{
     padding: 10px;
 }
+
+.qr_code button {
+    border-radius: 25px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: white;
+    padding: 10px 20px; 
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s ease;
+}
+.qr_code button:hover {
+    transform: scale(1.5);}
