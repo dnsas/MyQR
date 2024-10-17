@@ -96,7 +96,8 @@
             const nom = document.querySelector('.nom').value;
             const prenom = document.querySelector('.prenom').value;
             const classe = document.querySelector('.classe').value;
-            const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}`;
+            const date = Date.now()
+            const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
             const canvas = document.getElementById('qrCanvas');
             const qr = new QRious({
