@@ -96,7 +96,7 @@
             const nom = document.querySelector('.nom').value;
             const prenom = document.querySelector('.prenom').value;
             const classe = document.querySelector('.classe').value;
-            const date = Date.now()
+            const date = new Date().toISOString(); // Formatage de la date pour plus de lisibilité
             const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
             const canvas = document.getElementById('qrCanvas');
