@@ -146,7 +146,16 @@ div.scan img:hover {
     padding: 10px;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espace entre les boutons */
+    margin-top: 10px; /* Espace au-dessus des boutons */
+}
+
 .qr_code button {
+    width: 50%;
+    height: 50%;
     border-radius: 25px;
     border: 2px solid rgba(255, 255, 255, 0.2);
     background-color: rgba(0, 0, 0, 0.5);
@@ -157,9 +166,8 @@ div.scan img:hover {
 }
 
 .qr_code button:hover {
-    transform: scale(1.5);
+    transform: scale(1.1); /* Réduit légèrement l'effet de zoom pour une meilleure UX */
 }
-
 
 
 
