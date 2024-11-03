@@ -105,14 +105,20 @@ div.scan {
     right: 20px;
 }
 
-div.scan button {
+div.teacher {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+div.scan button, div.teacher button {
     background-color: transparent;
     border: none;
     cursor: pointer;
     padding: 10px;
 }
 
-div.scan img {
+div.scan img, div.teacher img {
     width: 50px;
     height: auto;
     filter: grayscale(100%);
@@ -124,7 +130,7 @@ div.scan img {
 }
 
 
-div.scan img:hover {
+div.scan img:hover, div.teacher img:hover{
     filter: invert(1);
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 30px;
