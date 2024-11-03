@@ -4,14 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page du Professeur</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 </head>
 <body>
-    <h1>Données des Élèves</h1>
-    <input type="text" id="classeInput" placeholder="Entrez la classe">
-    <button onclick="afficherDonneesClasse()">Afficher les données</button>
-    <div id="resultats"></div>
+    <div class="container">
+        <section class="form">
+            <h1>Données des Élèves</h1>
+            <div class="input-box">
+                <select id="classeSelect" onchange="afficherDonnees()">
+                    <option value="">Toutes les classes</option>
+                    <!-- Les options seront ajoutées dynamiquement -->
+                </select>
+            </div>
+            <button class="send-btn" onclick="afficherDonnees()">Afficher les données</button>
+        </section>
+
+        <section class="eleves-data">
+            <h2>Liste des Élèves</h2>
+            <div id="eleves-list"></div>
+        </section>
+    </div>
 
     <script src="teacher.js"></script>
 </body>
