@@ -97,3 +97,22 @@ section h1, .eleves-data h2 {
 .eleve-card p {
     margin: 5px 0;
 }
+
+#classeSelect {
+    width: 100%;
+    padding: 15px;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.8); 
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #000; 
+    outline: none;
+}
+
+#classeSelect option {
+    background-color: white; 
+    color: black; 
+}
+
+#classeSelect:not(:checked) {
+    color: #555; 
+}
