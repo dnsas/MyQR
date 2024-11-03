@@ -13,15 +13,6 @@ firebase.initializeApp(firebaseConfig);
 // Obtenir une référence à Firestore
 const db = firebase.firestore();
 
-
-function openPopup() {
-  document.getElementById('overlay').style.display = 'block';
-}
-
-function closePopup() {
-  document.getElementById('overlay').style.display = 'none';
-}
-
 function generateQRCode() {
   const nom = document.querySelector('.nom').value.trim();
   const prenom = document.querySelector('.prenom').value.trim();
