@@ -1,26 +1,45 @@
 // Création d'une instance de l'objet Instascan.Scanner pour scanner les QR codes
 const scanner = new Instascan.Scanner({
-    video: document.getElementById('preview') // L'élément vidéo où le flux de la caméra sera affiché
+    video: document.getElementById('preview')
 });
 
 // Récupération des éléments du DOM nécessaires
-const cameraSelector = document.getElementById('cameraSelector'); // Sélecteur de caméra
-const resultDiv = document.getElementById('result'); // Div qui affichera le résultat du scan
-const qrData = document.getElementById('qrData'); // Élément qui affichera les données scannées
-const rescanButton = document.getElementById('rescanButton'); // Bouton pour rescanner
+const cameraSelector = document.getElementById('cameraSelector');
+const resultDiv = document.getElementById('result');
+const qrDataList = document.getElementById('qrDataList');
+const rescanButton = document.getElementById('rescanButton');
 
 // Ajout d'un écouteur d'événements pour le scanner
 scanner.addListener('scan', function (content) {
-    qrData.innerText = content; // Affiche les données scannées dans l'élément qrData
-    resultDiv.style.display = 'block'; // Affiche le conteneur des résultats
-    console.log('Données : ', content); // Affiche les données dans la console pour le débogage
-    scanner.stop(); // Arrête le scanner après un scan réussi
+    displayQRData(content);
+    resultDiv.style.display = 'block';
+    console.log('Données : ', content);
+    scanner.stop();
 });
+
+// Fonction pour afficher les données du QR code
+function displayQRData(content) {
+    const qrDataCard = document.createElement('div');
+    qrDataCard.className = 'qr-data-card';
+    
+    const title = document.createElement('h3');
+    title.textContent = 'Données scannées';
+    
+    const data = document.createElement('p');
+    data.textContent = content;
+    
+    qrDataCard.appendChild(title);
+    qrDataCard.appendChild(data);
+    
+    qrDataList.innerHTML = ''; // Efface les résultats précédents
+    qrDataList.appendChild(qrDataCard);
+}
 
 // Ajout d'un écouteur d'événements pour le bouton de rescanner
 rescanButton.addEventListener('click', function () {
-    resultDiv.style.display = 'none'; // Cache le conteneur des résultats
-    scanner.start(); // Redémarre le scanner pour un nouveau scan
+    resultDiv.style.display = 'none';
+    qrDataList.innerHTML = ''; // Efface les résultats précédents
+    scanner.start(cameras[cameraSelector.value]);
 });
 
 // Récupération des caméras disponibles
