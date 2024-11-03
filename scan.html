@@ -7,57 +7,8 @@
     <title>Scanner QR Code</title>
     <script src="https://cdn.rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
     <script src="https://kit.fontawesome.com/f79850fb33.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #121212; /* Couleur de fond sombre pour le contraste */
-        }
-        #preview {
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-        }
-        #cameraSelector {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 14px;
-        }
-        #result {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%; /* Largeur de 80% de l'écran */
-            background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent noir */
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 16px;
-            z-index: 10;
-        }
-        #result p {
-            margin: 0;
-            font-weight: bold;
-            color: #00ff88; /* Vert fluo pour les données du QR */
-        }
-        #rescanButton {
-            margin-top: 10px;
-            padding: 10px 15px;
-            background-color: #00ff88; /* Couleur du bouton */
-            border: none;
-            border-radius: 5px;
-            color: #121212; /* Couleur du texte */
-            cursor: pointer;
-        }
-    </style>
+    <script src="scan.js" defer></script>
+    <link rel="stylesheet" href="scan.css">
 </head>
 <body>
     <select id="cameraSelector"></select>
@@ -67,52 +18,5 @@
         <p id="qrData"></p> <!-- Pour afficher les données du QR Code -->
         <button id="rescanButton">Rescanner</button> <!-- Bouton pour rescanner -->
     </div>
-
-    <script>
-        const scanner = new Instascan.Scanner({ 
-            video: document.getElementById('preview') 
-        });
-        const cameraSelector = document.getElementById('cameraSelector');
-        const resultDiv = document.getElementById('result');
-        const qrData = document.getElementById('qrData');
-        const rescanButton = document.getElementById('rescanButton');
-
-        scanner.addListener('scan', function(content) {
-            qrData.innerText = content; // Affiche les données scannées
-            resultDiv.style.display = 'block'; // Affiche le conteneur des résultats
-            console.log('Données : ', content);
-            scanner.stop(); // Arrête le scanner après un scan réussi
-        });
-
-        rescanButton.addEventListener('click', function() {
-            resultDiv.style.display = 'none'; // Cache le conteneur des résultats
-            scanner.start(); // Redémarre le scanner
-        });
-
-        Instascan.Camera.getCameras()
-            .then(cameras => {
-                if (cameras.length > 0) {
-                    cameras.forEach((camera, index) => {
-                        const option = document.createElement('option');
-                        option.value = index;
-                        option.text = camera.label || `Caméra ${index + 1}`;
-                        cameraSelector.add(option);
-                    });
-                    cameraSelector.addEventListener('change', function() {
-                        scanner.stop(); // Arrête le scanner avant de changer de caméra
-                        scanner.start(cameras[cameraSelector.value]);
-                    });
-                    // Démarre la première caméra par défaut
-                    scanner.start(cameras[cameraSelector.value]);
-                } else {
-                    console.error('Aucune caméra trouvée.');
-                    alert('Aucune caméra trouvée. Vérifiez vos paramètres de caméra.');
-                }
-            })
-            .catch(e => {
-                console.error('Erreur : ', e);
-                alert('Erreur lors de l\'accès à la caméra. Assurez-vous que les permissions sont accordées.');
-            });
-    </script>
 </body>
 </html>
