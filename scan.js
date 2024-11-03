@@ -18,39 +18,23 @@ scanner.addListener('scan', function (content) {
 });
 
 // Fonction pour afficher les données du QR code
-// Fonction pour afficher les données du QR code
 function displayQRData(content) {
     const qrDataCard = document.createElement('div');
     qrDataCard.className = 'qr-data-card';
-
-    // Supposons que le contenu est une chaîne formatée comme "Nom; Prénom; Classe; Date"
-    const dataParts = content.split(';'); // Séparez le contenu par un point-virgule
-
+    
     const title = document.createElement('h3');
     title.textContent = 'Données scannées';
-
+    
+    const data = document.createElement('p');
+    data.textContent = content;
+    
     qrDataCard.appendChild(title);
-
-    // Créez des paragraphes pour chaque partie de données
-    const name = document.createElement('p');
-    name.textContent = `Nom: ${dataParts[0].trim()}`; // Nom
-    qrDataCard.appendChild(name);
+    qrDataCard.appendChild(data);
     
-    const firstName = document.createElement('p');
-    firstName.textContent = `Prénom: ${dataParts[1].trim()}`; // Prénom
-    qrDataCard.appendChild(firstName);
-    
-    const classInfo = document.createElement('p');
-    classInfo.textContent = `Classe: ${dataParts[2].trim()}`; // Classe
-    qrDataCard.appendChild(classInfo);
-    
-    const dateInfo = document.createElement('p');
-    dateInfo.textContent = `Date: ${dataParts[3].trim()}`; // Date
-    qrDataCard.appendChild(dateInfo);
-
     qrDataList.innerHTML = ''; // Efface les résultats précédents
     qrDataList.appendChild(qrDataCard);
 }
+
 // Ajout d'un écouteur d'événements pour le bouton de rescanner
 rescanButton.addEventListener('click', function () {
     resultDiv.style.display = 'none';
