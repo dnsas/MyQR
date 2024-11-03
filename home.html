@@ -2,6 +2,28 @@
 <html lang="fr">
 
 <head>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"; // Pour Firestore
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
+            authDomain: "gestion-des-qrcodes.firebaseapp.com",
+            projectId: "gestion-des-qrcodes",
+            storageBucket: "gestion-des-qrcodes.firebasestorage.app",
+            messagingSenderId: "118022748151",
+            appId: "1:118022748151:web:5a1df3c3eb636bf16b60f2",
+            measurementId: "G-9YMVMQJSRN"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app); // Initialiser Firestore
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'accueil</title>
@@ -9,13 +31,16 @@
     <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
     <script src="https://kit.fontawesome.com/f79850fb33.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.1/qrious.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="home.monqr.js" defer></script>
+
 </head>
 
 <body>
     <section class="form">
         <h1>Générer mon QRCode</h1>
-        <div class="input-box"> 
+        <div class="input-box">
             <input type="text" placeholder="Nom" class="nom"> <!-- Champ -->
             <i class="fa-solid fa-arrow-down-z-a"></i>
         </div>
@@ -34,12 +59,12 @@
         <div class="qr_code" style="display:none;">
             <canvas id="qrCanvas"></canvas>
             <div class="button-container">
-            <button id="downloadBtn" style="display:none;" onclick="downloadQRCode()">
-                <i class="fa-solid fa-download"></i>
-            </button>
-            <button id="shareBtn" style="display:none;" onclick="shareQRCode()">
-                <i class="fa-solid fa-share-nodes"></i>
-            </button>
+                <button id="downloadBtn" style="display:none;" onclick="downloadQRCode()">
+                    <i class="fa-solid fa-download"></i>
+                </button>
+                <button id="shareBtn" style="display:none;" onclick="shareQRCode()">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
             </div>
         </div>
 
