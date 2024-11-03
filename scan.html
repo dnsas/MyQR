@@ -11,12 +11,22 @@
     <link rel="stylesheet" href="scan.css">
 </head>
 <body>
-    <select id="cameraSelector"></select>
-    <video id="preview" autoplay></video>
-    <div id="result" style="display: none;">
-        <h2>Résultat du Scan</h2>
-        <p id="qrData"></p> <!-- Pour afficher les données du QR Code -->
-        <button id="rescanButton">Rescanner</button> <!-- Bouton pour rescanner -->
+    <div class="container">
+        <section class="form">
+            <h1>Scanner QR Code</h1>
+            <div class="input-box">
+                <select id="cameraSelector"></select>
+            </div>
+            <div class="video-container">
+                <video id="preview" autoplay></video>
+            </div>
+        </section>
+
+        <section class="result-data" id="result" style="display: none;">
+            <h2>Résultat du Scan</h2>
+            <p id="qrData"></p>
+            <button class="send-btn" id="rescanButton">Rescanner</button>
+        </section>
     </div>
 </body>
 </html>
