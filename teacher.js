@@ -1,4 +1,4 @@
-// Initialisation de Firebase
+
 const firebaseConfig = {
     apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
     authDomain: "gestion-des-qrcodes.firebaseapp.com",
@@ -13,7 +13,7 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
   
-  // Initialisation de Firebase (votre code existant)
+
 
   function chargerClasses() {
     db.collection("eleves").get().then((querySnapshot) => {
@@ -33,7 +33,7 @@ const firebaseConfig = {
     });
 }
 
-// Fonction pour afficher les données des élèves
+
 function afficherDonnees() {
     const classeSelectionnee = document.getElementById('classeSelect').value;
     let query = db.collection("eleves");
@@ -61,7 +61,7 @@ function afficherDonnees() {
     });
 }
 
-// Charger les classes et afficher toutes les données au chargement de la page
+
 document.addEventListener('DOMContentLoaded', () => {
     chargerClasses();
     afficherDonnees();

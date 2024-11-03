@@ -7,10 +7,10 @@ const firebaseConfig = {
   appId: "1:118022748151:web:5a1df3c3eb636bf16b60f2",
   measurementId: "G-9YMVMQJSRN"
 };
-// Initialiser Firebase
+
 firebase.initializeApp(firebaseConfig);
 
-// Obtenir une référence à Firestore
+
 const db = firebase.firestore();
 
 function generateQRCode() {
@@ -34,7 +34,7 @@ function generateQRCode() {
 
   const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
-  // Sauvegarder les données dans Firebase
+
   db.collection("eleves").add({
     nom: nom,
     prenom: prenom,
@@ -44,7 +44,7 @@ function generateQRCode() {
   .then((docRef) => {
     console.log("Document written with ID: ", docRef.id);
     
-    // Générer le QR code ici, après la sauvegarde réussie
+
     const canvas = document.getElementById('qrCanvas');
     const qr = new QRious({
       element: canvas,
@@ -52,7 +52,7 @@ function generateQRCode() {
       size: 300,
     });
 
-    // Ajout du logo au QR code (si nécessaire)
+
     const logo = new Image();
     logo.crossOrigin = "anonymous";
     logo.src = 'logo.png';
@@ -63,7 +63,7 @@ function generateQRCode() {
       const y = (canvas.height / 2) - (logoSize / 2);
       ctx.drawImage(logo, x, y, logoSize, logoSize);
 
-      // Afficher le code QR, le bouton de téléchargement et le bouton de partage
+
       document.querySelector('.qr_code').style.display = 'block';
       document.getElementById('downloadBtn').style.display = 'block';
       document.getElementById('shareBtn').style.display = 'block';
@@ -71,7 +71,7 @@ function generateQRCode() {
 
     logo.onerror = function() {
       console.error("Erreur de chargement du logo");
-      // Afficher quand même le QR code sans le logo
+
       document.querySelector('.qr_code').style.display = 'block';
       document.getElementById('downloadBtn').style.display = 'block';
       document.getElementById('shareBtn').style.display = 'block';
@@ -93,9 +93,9 @@ function downloadQRCode() {
   }
 
   try {
-    // Créer un lien pour le téléchargement
+
     const link = document.createElement('a');
-    // Obtenir les données du canvas sous forme d'URL de données
+
     link.href = canvas.toDataURL('image/png');
     link.download = 'qrcode.png';
     link.click();
