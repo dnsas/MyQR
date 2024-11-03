@@ -51,6 +51,7 @@ function afficherDonnees() {
                     <h3>${data.prenom} ${data.nom}</h3>
                     <p>Classe: ${data.classe}</p>
                     <p>Date de création: ${data.dateCreation}</p>
+                    <button onclick="supprimerEleve('${doc.id}')" class="delete-btn">Supprimer</button>
                 </div>
             `;
         });
@@ -59,6 +60,19 @@ function afficherDonnees() {
         console.error("Erreur lors de la récupération des données:", error);
         document.getElementById('eleves-list').innerHTML = "<p>Erreur lors du chargement des données.</p>";
     });
+}
+
+// Fonction pour supprimer un élève
+function supprimerEleve(eleveId) {
+    if (confirm("Êtes-vous sûr de vouloir supprimer cet élève ?")) {
+        db.collection("eleves").doc(eleveId).delete().then(() => {
+            console.log("Élève supprimé avec succès");
+            afficherDonnees(); // Rafraîchir la liste après suppression
+        }).catch((error) => {
+            console.error("Erreur lors de la suppression de l'élève: ", error);
+            alert("Erreur lors de la suppression de l'élève.");
+        });
+    }
 }
 
 

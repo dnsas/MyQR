@@ -116,3 +116,17 @@ section h1, .eleves-data h2 {
 #classeSelect:not(:checked) {
     color: #555; 
 }
+
+.delete-btn {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
+}
