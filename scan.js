@@ -1,5 +1,3 @@
-
-
 const scanner = new Instascan.Scanner({
     video: document.getElementById('preview')
 });
@@ -10,20 +8,9 @@ const qrDataList = document.getElementById('qrDataList');
 const rescanButton = document.getElementById('rescanButton');
 
 scanner.addListener('scan', function (content) {
-    let decompressedContent;
-    try {
-        decompressedContent = LZString.decompressFromBase64(content);
-        if (!decompressedContent) {
-            decompressedContent = content;
-        }
-    } catch (error) {
-        console.error("Erreur de décompression:", error);
-        decompressedContent = content;
-    }
-
-    displayQRData(decompressedContent);
+    displayQRData(content);
     resultDiv.style.display = 'block';
-    console.log('Données décompressées : ', decompressedContent);
+    console.log('Données scannées : ', content);
     scanner.stop();
 });
 

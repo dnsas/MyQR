@@ -10,7 +10,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-
 const db = firebase.firestore();
 
 function generateQRCode() {
@@ -34,7 +33,6 @@ function generateQRCode() {
 
   const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
-
   db.collection("eleves").add({
     nom: nom,
     prenom: prenom,
@@ -44,14 +42,12 @@ function generateQRCode() {
   .then((docRef) => {
     console.log("Document written with ID: ", docRef.id);
     
-
     const canvas = document.getElementById('qrCanvas');
     const qr = new QRious({
       element: canvas,
       value: qrData,
       size: 300,
     });
-
 
     const logo = new Image();
     logo.crossOrigin = "anonymous";
@@ -63,7 +59,6 @@ function generateQRCode() {
       const y = (canvas.height / 2) - (logoSize / 2);
       ctx.drawImage(logo, x, y, logoSize, logoSize);
 
-
       document.querySelector('.qr_code').style.display = 'block';
       document.getElementById('downloadBtn').style.display = 'block';
       document.getElementById('shareBtn').style.display = 'block';
@@ -71,7 +66,6 @@ function generateQRCode() {
 
     logo.onerror = function() {
       console.error("Erreur de chargement du logo");
-
       document.querySelector('.qr_code').style.display = 'block';
       document.getElementById('downloadBtn').style.display = 'block';
       document.getElementById('shareBtn').style.display = 'block';
@@ -83,8 +77,6 @@ function generateQRCode() {
   });
 }
 
-
-
 function downloadQRCode() {
   const canvas = document.getElementById('qrCanvas');
   if (!canvas) {
@@ -93,9 +85,7 @@ function downloadQRCode() {
   }
 
   try {
-
     const link = document.createElement('a');
-
     link.href = canvas.toDataURL('image/png');
     link.download = 'qrcode.png';
     link.click();
@@ -105,12 +95,6 @@ function downloadQRCode() {
     alert("Une erreur s'est produite lors de la création du lien de téléchargement. Veuillez réessayer.");
   }
 }
-
-
-
-
-
-
 
 function shareQRCode() {
   const canvas = document.getElementById('qrCanvas');

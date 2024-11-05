@@ -79,26 +79,21 @@ function supprimerEleve(eleveId) {
 }
 
 function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
-    const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création: ${dateCreation}`;
-    const compressedData = LZString.compressToBase64(qrData);
+    const qrData = `N: ${nom}, P: ${prenom}, Classe: ${classe}, Date: ${dateCreation}`;
     
     const qrcodeElement = document.getElementById(`qrcode-${eleveId}`);
     qrcodeElement.innerHTML = ''; // Effacer le contenu précédent
 
     new QRCode(qrcodeElement, {
-        text: compressedData,
+        text: qrData,
         width: 256,
         height: 256,
         colorDark : "#000000",
         colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.M
+        correctLevel : QRCode.CorrectLevel.L
     });
-
-    // Ajouter un élément pour afficher les données décompressées
-    const dataElement = document.createElement('p');
-    dataElement.textContent = qrData;
-    qrcodeElement.appendChild(dataElement);
 }
+
 
 function retournerCarte(button) {
     const card = button.closest('.eleve-card');
