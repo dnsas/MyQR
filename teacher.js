@@ -90,11 +90,17 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
     const qrcodeElement = document.getElementById(`qrcode-${eleveId}`);
     qrcodeElement.innerHTML = ''; // Effacer le contenu précédent
 
-    // Utilisez QRious au lieu de QRCode pour la cohérence
+    // Créez un élément canvas manuellement
+    const canvas = document.createElement('canvas');
+    canvas.width = 300;
+    canvas.height = 300;
+    qrcodeElement.appendChild(canvas);
+
+    // Utilisez QRious avec le canvas créé
     new QRious({
-        element: qrcodeElement,
+        element: canvas,
         value: qrData,
-        size: 300, // Utilisez la même taille que dans home.monqr.js
+        size: 300,
     });
 
     // Ajoutez le logo si nécessaire
@@ -102,12 +108,15 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
     logo.crossOrigin = "anonymous";
     logo.src = 'logo.png';
     logo.onload = function () {
-        const canvas = qrcodeElement.querySelector('canvas');
         const ctx = canvas.getContext('2d');
-        const logoSize = 60;
-        const x = (canvas.width / 2) - (logoSize / 2);
-        const y = (canvas.height / 2) - (logoSize / 2);
-        ctx.drawImage(logo, x, y, logoSize, logoSize);
+        if (ctx) {
+            const logoSize = 60;
+            const x = (canvas.width / 2) - (logoSize / 2);
+            const y = (canvas.height / 2) - (logoSize / 2);
+            ctx.drawImage(logo, x, y, logoSize, logoSize);
+        } else {
+            console.error('Unable to get 2D context from canvas');
+        }
     };
 
     // Ajouter un élément pour afficher les données (optionnel)
