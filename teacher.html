@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="teacher.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
 </head>
 <body>
     <div class="container">
+        <header>
+            <h1>Gestion des Élèves</h1>
+        </header>
         <section class="form">
-            <h1>Données des Élèves</h1>
+            <h2>Filtrer par Classe</h2>
             <div class="input-box">
                 <select id="classeSelect" onchange="afficherDonnees()">
                     <option value="">Toutes les classes</option>
