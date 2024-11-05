@@ -165,33 +165,60 @@ h1, h2 {
 }
 
 div.retour {
-    position: absolute;
-    top: 20px;
-    left: 20px;
+    position: fixed; 
+    top: 1rem; 
+    left: 1rem;
+    z-index: 1000; 
 }
 
-div.retour button{
+div.retour button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    padding: 10px;
+    padding: 0;
 }
 
 div.retour img {
-    height: auto;
+    width: 2.5rem;
+    height: 2.5rem;
     filter: grayscale(100%);
     background-color: white;
-    border-radius: 30px;
-    width: 50px;
-    height: auto;
-    transition: 1s;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+div.retour img:hover {
+    filter: invert(1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
 
-div.retour img:hover{
-    filter: invert(1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 30px;
+.container {
+    padding-top: 4rem;
+}
+
+
+@media screen and (max-width: 768px) {
+    div.retour {
+        top: 0.5rem;
+        left: 0.5rem;
+    }
+
+    div.retour img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+
+    .container {
+        padding-top: 3rem;
+    }
+}
+@media (max-width: 768px) {
+    .eleve-card {
+        width: 100%;
+        max-width: 300px;
+    }
 }
 
 @media (max-width: 768px) {
