@@ -141,6 +141,10 @@ function retournerCarte(button) {
     }
 }
 
+function retourAccueil() {
+    window.location.href = 'home.html';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     chargerClasses();
     afficherDonnees();
