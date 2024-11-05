@@ -122,10 +122,7 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
         }
     };
 
-    // Ajouter un élément pour afficher les données (optionnel)
-    const dataElement = document.createElement('p');
-    dataElement.textContent = decodeURIComponent(qrData);
-    qrcodeElement.appendChild(dataElement);
+
 }
 
 
