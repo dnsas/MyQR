@@ -17,11 +17,13 @@ function generateQRCode() {
   const prenom = encodeURIComponent(document.querySelector('.prenom').value.trim());
   const classe = encodeURIComponent(document.querySelector('.classe').value.trim());
 
-
   if (!nom || !prenom || !classe) {
     alert("Veuillez remplir tous les champs !");
     return;
   }
+
+  // Afficher le cercle de chargement
+  document.getElementById('loading-spinner').style.display = 'flex';
 
   const date = new Date().toLocaleString('fr-FR', {
     day: 'numeric',
@@ -60,6 +62,8 @@ function generateQRCode() {
         const y = (canvas.height / 2) - (logoSize / 2);
         ctx.drawImage(logo, x, y, logoSize, logoSize);
 
+        // Cacher le cercle de chargement et afficher le QR code
+        document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
         document.getElementById('downloadBtn').style.display = 'block';
         document.getElementById('shareBtn').style.display = 'block';
@@ -67,6 +71,8 @@ function generateQRCode() {
 
       logo.onerror = function () {
         console.error("Erreur de chargement du logo");
+        // Cacher le cercle de chargement même en cas d'erreur
+        document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
         document.getElementById('downloadBtn').style.display = 'block';
         document.getElementById('shareBtn').style.display = 'block';
@@ -74,9 +80,13 @@ function generateQRCode() {
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
+      // Cacher le cercle de chargement en cas d'erreur
+      document.getElementById('loading-spinner').style.display = 'none';
       alert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
     });
 }
+
+// Les fonctions downloadQRCode et shareQRCode restent inchangées
 
 function downloadQRCode() {
   const canvas = document.getElementById('qrCanvas');

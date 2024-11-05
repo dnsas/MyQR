@@ -6,7 +6,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"; // Pour Firestore
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
@@ -22,9 +22,7 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-        const db = getFirestore(app); // Initialiser Firestore
-        src = "https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"
-        src = "https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"
+        const db = getFirestore(app);
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,27 +34,25 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="home.monqr.js" defer></script>
-
-
 </head>
 
 <body>
     <section class="form">
         <h1>Générer mon QRCode</h1>
         <div class="input-box">
-            <input type="text" placeholder="Nom" class="nom"> <!-- Champ -->
+            <input type="text" placeholder="Nom" class="nom">
             <i class="fa-solid fa-arrow-down-z-a"></i>
         </div>
         <div class="input-box">
-            <input type="text" placeholder="Prenom" class="prenom"> <!-- `prenom` = relier au javascript -->
+            <input type="text" placeholder="Prenom" class="prenom">
             <i class="fa-solid fa-signature"></i>
         </div>
         <div class="input-box">
             <input type="text" placeholder="Ma Classe" class="classe">
-            <i class="fa-solid fa-users"></i> <!-- logo -->
+            <i class="fa-solid fa-users"></i>
         </div>
 
-        <button class="send-btn" onclick="generateQRCode()">Envoyer</button> <!-- avec appel du Javascript -->
+        <button class="send-btn" onclick="generateQRCode()">Envoyer</button>
 
         <div id="current_date"></div>
         <div class="qr_code" style="display:none;">
@@ -69,8 +65,6 @@
                     <i class="fa-solid fa-share-nodes"></i>
                 </button>
             </div>
-        </div>
-
         </div>
     </section>
 
@@ -87,6 +81,10 @@
                 <img src="teacher.png" alt="Mes élèves">
             </button>
         </a>
+    </div>
+
+    <div id="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
     </div>
 
 </body>

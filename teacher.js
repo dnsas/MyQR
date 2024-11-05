@@ -29,6 +29,10 @@ function chargerClasses() {
     });
 }
 
+function tronquerTexte(texte, longueurMax) {
+    return texte.length > longueurMax ? texte.substring(0, longueurMax - 3) + '...' : texte;
+}
+
 function afficherDonnees() {
     const classeSelectionnee = document.getElementById('classeSelect').value;
     let query = db.collection("eleves");
@@ -41,12 +45,15 @@ function afficherDonnees() {
         let html = '';
         querySnapshot.forEach((doc) => {
             const data = doc.data();
+            const nomTronque = tronquerTexte(data.nom, 15);
+            const prenomTronque = tronquerTexte(data.prenom, 15);
+            const classeTronquee = tronquerTexte(data.classe, 20);
             html += `
                 <div class="eleve-card" data-eleve-id="${doc.id}">
                     <div class="eleve-card-inner">
                         <div class="eleve-card-front">
-                            <h3>${data.prenom} ${data.nom}</h3>
-                            <p>Classe: ${data.classe}</p>
+                            <h3 title="${data.prenom} ${data.nom}">${prenomTronque} ${nomTronque}</h3>
+                            <p title="Classe: ${data.classe}">Classe: ${classeTronquee}</p>
                             <p>Date de création: ${data.dateCreation}</p>
                             <button onclick="retournerCarte(this)" class="view-qr-btn">Voir QR Code</button>
                             <button onclick="supprimerEleve('${doc.id}')" class="delete-btn">Supprimer</button>
