@@ -157,7 +157,11 @@ h1, h2 {
     height: 70%;
 }
 
-
+[id^="qrcode-"] {
+    width: 100%; /* Ou une valeur fixe comme 300px */
+    max-width: 300px; /* Optionnel : limite la taille maximale */
+    aspect-ratio: 1 / 1; /* Garde le conteneur carré */
+}
 
 @media (max-width: 768px) {
     .eleve-card {

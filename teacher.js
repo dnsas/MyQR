@@ -90,17 +90,20 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
     const qrcodeElement = document.getElementById(`qrcode-${eleveId}`);
     qrcodeElement.innerHTML = ''; // Effacer le contenu précédent
 
+    // Obtenez la largeur du conteneur
+    const containerWidth = qrcodeElement.offsetWidth;
+
     // Créez un élément canvas manuellement
     const canvas = document.createElement('canvas');
-    canvas.width = 300;
-    canvas.height = 300;
+    canvas.width = containerWidth;
+    canvas.height = containerWidth; // Gardez le QR code carré
     qrcodeElement.appendChild(canvas);
 
     // Utilisez QRious avec le canvas créé
     new QRious({
         element: canvas,
         value: qrData,
-        size: 300,
+        size: containerWidth,
     });
 
     // Ajoutez le logo si nécessaire
@@ -110,7 +113,7 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
     logo.onload = function () {
         const ctx = canvas.getContext('2d');
         if (ctx) {
-            const logoSize = 60;
+            const logoSize = containerWidth * 0.2; // Ajustez la taille du logo en fonction de la taille du conteneur
             const x = (canvas.width / 2) - (logoSize / 2);
             const y = (canvas.height / 2) - (logoSize / 2);
             ctx.drawImage(logo, x, y, logoSize, logoSize);
