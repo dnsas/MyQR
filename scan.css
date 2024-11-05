@@ -94,6 +94,19 @@ h1, h2 {
 
 .qr-data-card p {
     margin: 5px 0;
+    display: block; /* Assure que chaque paragraphe est sur une nouvelle ligne */
+    word-break: break-word; /* Permet aux longs mots de se couper si nécessaire */
+}
+
+/* Ajoutez ces styles pour améliorer la lisibilité */
+.qr-data-card .info-label {
+    font-weight: bold;
+    color: #00ff88; /* Couleur pour les labels */
+}
+
+.qr-data-card .info-value {
+    display: block;
+    margin-bottom: 10px; /* Espace entre chaque information */
 }
 .send-btn {
     width: 100%;
