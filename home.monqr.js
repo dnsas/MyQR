@@ -13,9 +13,10 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 function generateQRCode() {
-  const nom = document.querySelector('.nom').value.trim();
-  const prenom = document.querySelector('.prenom').value.trim();
-  const classe = document.querySelector('.classe').value.trim();
+  const nom = encodeURIComponent(document.querySelector('.nom').value.trim());
+  const prenom = encodeURIComponent(document.querySelector('.prenom').value.trim());
+  const classe = encodeURIComponent(document.querySelector('.classe').value.trim());
+
 
   if (!nom || !prenom || !classe) {
     alert("Veuillez remplir tous les champs !");
@@ -39,42 +40,42 @@ function generateQRCode() {
     classe: classe,
     dateCreation: date
   })
-  .then((docRef) => {
-    console.log("Document written with ID: ", docRef.id);
-    
-    const canvas = document.getElementById('qrCanvas');
-    const qr = new QRious({
-      element: canvas,
-      value: qrData,
-      size: 300,
+    .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+
+      const canvas = document.getElementById('qrCanvas');
+      const qr = new QRious({
+        element: canvas,
+        value: qrData,
+        size: 300,
+      });
+
+      const logo = new Image();
+      logo.crossOrigin = "anonymous";
+      logo.src = 'logo.png';
+      logo.onload = function () {
+        const ctx = canvas.getContext('2d');
+        const logoSize = 60;
+        const x = (canvas.width / 2) - (logoSize / 2);
+        const y = (canvas.height / 2) - (logoSize / 2);
+        ctx.drawImage(logo, x, y, logoSize, logoSize);
+
+        document.querySelector('.qr_code').style.display = 'block';
+        document.getElementById('downloadBtn').style.display = 'block';
+        document.getElementById('shareBtn').style.display = 'block';
+      };
+
+      logo.onerror = function () {
+        console.error("Erreur de chargement du logo");
+        document.querySelector('.qr_code').style.display = 'block';
+        document.getElementById('downloadBtn').style.display = 'block';
+        document.getElementById('shareBtn').style.display = 'block';
+      };
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+      alert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
     });
-
-    const logo = new Image();
-    logo.crossOrigin = "anonymous";
-    logo.src = 'logo.png';
-    logo.onload = function () {
-      const ctx = canvas.getContext('2d');
-      const logoSize = 60;
-      const x = (canvas.width / 2) - (logoSize / 2);
-      const y = (canvas.height / 2) - (logoSize / 2);
-      ctx.drawImage(logo, x, y, logoSize, logoSize);
-
-      document.querySelector('.qr_code').style.display = 'block';
-      document.getElementById('downloadBtn').style.display = 'block';
-      document.getElementById('shareBtn').style.display = 'block';
-    };
-
-    logo.onerror = function() {
-      console.error("Erreur de chargement du logo");
-      document.querySelector('.qr_code').style.display = 'block';
-      document.getElementById('downloadBtn').style.display = 'block';
-      document.getElementById('shareBtn').style.display = 'block';
-    };
-  })
-  .catch((error) => {
-    console.error("Error adding document: ", error);
-    alert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
-  });
 }
 
 function downloadQRCode() {
@@ -99,24 +100,24 @@ function downloadQRCode() {
 function shareQRCode() {
   const canvas = document.getElementById('qrCanvas');
   if (!canvas) {
-      console.error('Canvas not found!');
-      return;
+    console.error('Canvas not found!');
+    return;
   }
 
-  canvas.toBlob(function(blob) {
-      const file = new File([blob], "qrcode.png", { type: "image/png" });
-      const shareData = {
-          files: [file],
-          title: 'Mon QR Code',
-          text: 'Voici mon QR Code généré'
-      };
+  canvas.toBlob(function (blob) {
+    const file = new File([blob], "qrcode.png", { type: "image/png" });
+    const shareData = {
+      files: [file],
+      title: 'Mon QR Code',
+      text: 'Voici mon QR Code généré'
+    };
 
-      if (navigator.share && navigator.canShare(shareData)) {
-          navigator.share(shareData)
-              .then(() => console.log('QR Code partagé avec succès'))
-              .catch((error) => console.error('Erreur lors du partage:', error));
-      } else {
-          alert("Le partage n'est pas pris en charge sur votre appareil ou navigateur.");
-      }
+    if (navigator.share && navigator.canShare(shareData)) {
+      navigator.share(shareData)
+        .then(() => console.log('QR Code partagé avec succès'))
+        .catch((error) => console.error('Erreur lors du partage:', error));
+    } else {
+      alert("Le partage n'est pas pris en charge sur votre appareil ou navigateur.");
+    }
   }, 'image/png');
 }

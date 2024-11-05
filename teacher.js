@@ -79,20 +79,43 @@ function supprimerEleve(eleveId) {
 }
 
 function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
-    const qrData = `N: ${nom}, P: ${prenom}, Classe: ${classe}, Date: ${dateCreation}`;
-    
+    // Encodez les données de la même manière que dans home.monqr.js
+    const encodedNom = encodeURIComponent(nom);
+    const encodedPrenom = encodeURIComponent(prenom);
+    const encodedClasse = encodeURIComponent(classe);
+
+    // Formatez les données exactement comme dans home.monqr.js
+    const qrData = `Nom: ${encodedNom}, Prenom: ${encodedPrenom}, Classe: ${encodedClasse}, Date de création : ${dateCreation}`;
+
     const qrcodeElement = document.getElementById(`qrcode-${eleveId}`);
     qrcodeElement.innerHTML = ''; // Effacer le contenu précédent
 
-    new QRCode(qrcodeElement, {
-        text: qrData,
-        width: 256,
-        height: 256,
-        colorDark : "#000000",
-        colorLight : "#ffffff",
-        correctLevel : QRCode.CorrectLevel.L
+    // Utilisez QRious au lieu de QRCode pour la cohérence
+    new QRious({
+        element: qrcodeElement,
+        value: qrData,
+        size: 300, // Utilisez la même taille que dans home.monqr.js
     });
+
+    // Ajoutez le logo si nécessaire
+    const logo = new Image();
+    logo.crossOrigin = "anonymous";
+    logo.src = 'logo.png';
+    logo.onload = function () {
+        const canvas = qrcodeElement.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
+        const logoSize = 60;
+        const x = (canvas.width / 2) - (logoSize / 2);
+        const y = (canvas.height / 2) - (logoSize / 2);
+        ctx.drawImage(logo, x, y, logoSize, logoSize);
+    };
+
+    // Ajouter un élément pour afficher les données (optionnel)
+    const dataElement = document.createElement('p');
+    dataElement.textContent = decodeURIComponent(qrData);
+    qrcodeElement.appendChild(dataElement);
 }
+
 
 
 function retournerCarte(button) {
