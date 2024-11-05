@@ -47,7 +47,7 @@ function afficherDonnees() {
                         <div class="eleve-card-front">
                             <h3>${data.prenom} ${data.nom}</h3>
                             <p>Classe: ${data.classe}</p>
-                            <p>Date de création: ${data.dateCreation}</p>
+                            <p>Crée le ${data.dateCreation}</p>
                             <button onclick="retournerCarte(this)" class="view-qr-btn">Voir QR Code</button>
                             <button onclick="supprimerEleve('${doc.id}')" class="delete-btn">Supprimer</button>
                         </div>
@@ -85,7 +85,7 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
     const encodedClasse = encodeURIComponent(classe);
 
     // Formatez les données exactement comme dans home.monqr.js
-    const qrData = `Nom: ${encodedNom}, Prenom: ${encodedPrenom}, Classe: ${encodedClasse}, Créé le ${dateCreation}`;
+    const qrData = `Nom: ${encodedNom}, Prenom: ${encodedPrenom}, Classe: ${encodedClasse}, Date de création: ${dateCreation}`;
 
     const qrcodeElement = document.getElementById(`qrcode-${eleveId}`);
     qrcodeElement.innerHTML = ''; // Effacer le contenu précédent

@@ -32,7 +32,7 @@ function generateQRCode() {
     second: '2-digit',
   });
 
-  const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
+  const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Crée le : ${date}`;
 
   db.collection("eleves").add({
     nom: nom,
