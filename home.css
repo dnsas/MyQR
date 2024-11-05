@@ -79,7 +79,6 @@ section h1 {
 }
 
 
-
 .send-btn {
     width: 100%;
     padding: 15px;
@@ -107,8 +106,8 @@ div.scan {
 
 div.teacher {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 10px;
+    left: 30px;
 }
 
 div.scan button, div.teacher button {
@@ -119,7 +118,6 @@ div.scan button, div.teacher button {
 }
 
 div.scan img, div.teacher img {
-    width: 50px;
     height: auto;
     filter: grayscale(100%);
     background-color: white;

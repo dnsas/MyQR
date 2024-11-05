@@ -60,7 +60,7 @@ h1, h2 {
 
 .video-container {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 16 / 16;
     overflow: hidden;
     border-radius: 15px;
 }
