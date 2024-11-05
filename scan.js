@@ -62,3 +62,7 @@ Instascan.Camera.getCameras()
         console.error('Erreur : ', e);
         alert('Erreur lors de l\'accès à la caméra. Assurez-vous que les permissions sont accordées.');
     });
+
+function retourAccueil() {
+    window.location.href = 'home.html';
+}
