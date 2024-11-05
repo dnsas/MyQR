@@ -63,7 +63,7 @@ h1, h2 {
     aspect-ratio: 16 / 16;
     overflow: hidden;
     border-radius: 15px;
-    transform: scaleY(-1);
+    transform: scaleX(-1);
 }
 
 #preview {
