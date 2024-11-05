@@ -31,7 +31,8 @@ header {
     margin-bottom: 30px;
 }
 
-h1, h2 {
+h1,
+h2 {
     color: #ffffff;
     margin-bottom: 20px;
 }
@@ -87,7 +88,8 @@ h1, h2 {
     transform: rotateY(180deg);
 }
 
-.eleve-card-front, .eleve-card-back {
+.eleve-card-front,
+.eleve-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -96,7 +98,7 @@ h1, h2 {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .eleve-card-front {
@@ -125,10 +127,12 @@ h1, h2 {
     justify-content: space-between;
 }
 
-.delete-btn, .view-qr-btn, .return-btn {
+.delete-btn,
+.view-qr-btn,
+.return-btn {
     padding: 10px 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     color: #ffffff;
     font-weight: 500;
     cursor: pointer;
@@ -143,11 +147,13 @@ h1, h2 {
     background-color: #ff6b81;
 }
 
-.view-qr-btn, .return-btn {
+.view-qr-btn,
+.return-btn {
     background-color: #2ea0d5;
 }
 
-.view-qr-btn:hover, .return-btn:hover {
+.view-qr-btn:hover,
+.return-btn:hover {
     background-color: #7bbaed;
 }
 
@@ -159,16 +165,19 @@ h1, h2 {
 }
 
 [id^="qrcode-"] {
-    width: 100%; /* Ou une valeur fixe comme 300px */
-    max-width: 300px; /* Optionnel : limite la taille maximale */
-    aspect-ratio: 1 / 1; /* Garde le conteneur carré */
+    width: 100%;
+    /* Ou une valeur fixe comme 300px */
+    max-width: 300px;
+    /* Optionnel : limite la taille maximale */
+    aspect-ratio: 1 / 1;
+    /* Garde le conteneur carré */
 }
 
 div.retour {
-    position: fixed; 
-    top: 1rem; 
+    position: fixed;
+    top: 1rem;
     left: 1rem;
-    z-index: 1000; 
+    z-index: 1000;
 }
 
 div.retour button {
@@ -214,6 +223,7 @@ div.retour img:hover {
         padding-top: 3rem;
     }
 }
+
 @media (max-width: 768px) {
     .eleve-card {
         width: 100%;
@@ -231,7 +241,7 @@ div.retour img:hover {
 
 .nombre-eleves {
     position: absolute;
-    right: 20px ;
+    right: 20px;
     font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 10px;
@@ -276,11 +286,33 @@ div.retour img:hover {
     .eleve-card {
         width: 100%;
         max-width: 300px;
-        height: auto; /* Permettre une hauteur flexible */
+        height: auto;
+        /* Permettre une hauteur flexible */
     }
 
-    .eleve-card-front, .eleve-card-back {
+    .eleve-card-front,
+    .eleve-card-back {
         padding: 15px;
+    }
+
+
+    #eleves-list {
+        display: flex;
+        flex-direction: column;
+        /* Afficher les cartes en colonne */
+        align-items: center;
+        /* Centrer les cartes */
+    }
+
+    .eleve-card {
+        width: 100%;
+        /* Prendre toute la largeur */
+        max-width: none;
+        /* Supprimer la limite de largeur */
+        height: auto;
+        /* Permettre une hauteur flexible */
+        margin-bottom: 20px;
+        /* Espace entre les cartes */
     }
 
     .eleve-card h3 {
@@ -296,7 +328,9 @@ div.retour img:hover {
         gap: 10px;
     }
 
-    .delete-btn, .view-qr-btn, .return-btn {
+    .delete-btn,
+    .view-qr-btn,
+    .return-btn {
         width: 100%;
     }
 
@@ -317,7 +351,8 @@ div.retour img:hover {
         padding: 15px;
     }
 
-    h1, h2 {
+    h1,
+    h2 {
         font-size: 24px;
     }
 
