@@ -1,40 +1,48 @@
 
+
 const scanner = new Instascan.Scanner({
     video: document.getElementById('preview')
 });
-
 
 const cameraSelector = document.getElementById('cameraSelector');
 const resultDiv = document.getElementById('result');
 const qrDataList = document.getElementById('qrDataList');
 const rescanButton = document.getElementById('rescanButton');
 
-
 scanner.addListener('scan', function (content) {
-    displayQRData(content);
+    let decompressedContent;
+    try {
+        decompressedContent = LZString.decompressFromBase64(content);
+        if (!decompressedContent) {
+            decompressedContent = content;
+        }
+    } catch (error) {
+        console.error("Erreur de décompression:", error);
+        decompressedContent = content;
+    }
+
+    displayQRData(decompressedContent);
     resultDiv.style.display = 'block';
-    console.log('Données : ', content);
+    console.log('Données décompressées : ', decompressedContent);
     scanner.stop();
 });
-
 
 function displayQRData(content) {
     const qrDataCard = document.createElement('div');
     qrDataCard.className = 'qr-data-card';
-    
+
     const title = document.createElement('h3');
     title.textContent = 'Données scannées';
-    
+
     const data = document.createElement('p');
     data.textContent = content;
-    
+
     qrDataCard.appendChild(title);
     qrDataCard.appendChild(data);
-    
-    qrDataList.innerHTML = ''; 
+
+    qrDataList.innerHTML = '';
     qrDataList.appendChild(qrDataCard);
 }
-
 
 rescanButton.addEventListener('click', function () {
     resultDiv.style.display = 'none';
@@ -42,26 +50,25 @@ rescanButton.addEventListener('click', function () {
     scanner.start(cameras[cameraSelector.value]);
 });
 
-
 Instascan.Camera.getCameras()
     .then(cameras => {
-        if (cameras.length > 0) { 
-            cameras.forEach((camera, index) => { 
-                const option = document.createElement('option'); 
-                option.value = index; 
-                option.text = camera.label || `Caméra ${index + 1}`; 
+        if (cameras.length > 0) {
+            cameras.forEach((camera, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.text = camera.label || `Caméra ${index + 1}`;
                 cameraSelector.add(option);
             });
-            
+
             cameraSelector.addEventListener('change', function () {
-                scanner.stop(); 
-                scanner.start(cameras[cameraSelector.value]); 
+                scanner.stop();
+                scanner.start(cameras[cameraSelector.value]);
             });
-            
+
             scanner.start(cameras[cameraSelector.value]);
         } else {
-            console.error('Aucune caméra trouvée.'); 
-            alert('Aucune caméra trouvée. Vérifiez vos paramètres de caméra.'); 
+            console.error('Aucune caméra trouvée.');
+            alert('Aucune caméra trouvée. Vérifiez vos paramètres de caméra.');
         }
     })
     .catch(e => {

@@ -87,12 +87,17 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
 
     new QRCode(qrcodeElement, {
         text: compressedData,
-        width: 256,  // Assurez-vous que cette valeur correspond à la largeur CSS
-        height: 256, // Assurez-vous que cette valeur correspond à la hauteur CSS
+        width: 256,
+        height: 256,
         colorDark : "#000000",
         colorLight : "#ffffff",
         correctLevel : QRCode.CorrectLevel.M
     });
+
+    // Ajouter un élément pour afficher les données décompressées
+    const dataElement = document.createElement('p');
+    dataElement.textContent = qrData;
+    qrcodeElement.appendChild(dataElement);
 }
 
 function retournerCarte(button) {
