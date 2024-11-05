@@ -85,7 +85,7 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
     const encodedClasse = encodeURIComponent(classe);
 
     // Formatez les données exactement comme dans home.monqr.js
-    const qrData = `Nom: ${encodedNom}, Prenom: ${encodedPrenom}, Classe: ${encodedClasse}, Date de création : ${dateCreation}`;
+    const qrData = `Nom: ${encodedNom}, Prenom: ${encodedPrenom}, Classe: ${encodedClasse}, Créé le ${dateCreation}`;
 
     const qrcodeElement = document.getElementById(`qrcode-${eleveId}`);
     qrcodeElement.innerHTML = ''; // Effacer le contenu précédent
