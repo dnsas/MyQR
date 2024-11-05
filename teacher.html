@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
 </head>
+
 <body>
     <div class="container">
         <div class="retour">
@@ -30,13 +32,17 @@
                 </select>
             </div>
         </section>
-
+        <div id="nombre-eleves" class="nombre-eleves">Nombre d'élèves : 0</div>
         <section class="eleves-data">
             <h2>Liste des Élèves</h2>
+            <div id="eleves-list"></div>
+        </section>
+        <section class="eleves-data">
             <div id="eleves-list"></div>
         </section>
     </div>
 
     <script src="teacher.js"></script>
 </body>
+
 </html>

@@ -43,7 +43,9 @@ function afficherDonnees() {
 
     query.get().then((querySnapshot) => {
         let html = '';
+        let nombreEleves = 0;
         querySnapshot.forEach((doc) => {
+            nombreEleves++;
             const data = doc.data();
             const nomTronque = tronquerTexte(data.nom, 15);
             const prenomTronque = tronquerTexte(data.prenom, 15);
@@ -67,9 +69,21 @@ function afficherDonnees() {
             `;
         });
         document.getElementById('eleves-list').innerHTML = html;
+        
+        // Afficher le nombre d'élèves
+        const nombreElevesElement = document.getElementById('nombre-eleves');
+        if (nombreElevesElement) {
+            nombreElevesElement.textContent = `Nombre d'élèves : ${nombreEleves}`;
+        }
     }).catch((error) => {
         console.error("Erreur lors de la récupération des données:", error);
         document.getElementById('eleves-list').innerHTML = "<p>Erreur lors du chargement des données.</p>";
+        
+        // Réinitialiser le compteur en cas d'erreur
+        const nombreElevesElement = document.getElementById('nombre-eleves');
+        if (nombreElevesElement) {
+            nombreElevesElement.textContent = "Nombre d'élèves : 0";
+        }
     });
 }
 

@@ -144,11 +144,11 @@ h1, h2 {
 }
 
 .view-qr-btn, .return-btn {
-    background-color: #2ed573;
+    background-color: #2ea0d5;
 }
 
 .view-qr-btn:hover, .return-btn:hover {
-    background-color: #7bed9f;
+    background-color: #7bbaed;
 }
 
 #qrcode-container {
@@ -226,4 +226,18 @@ div.retour img:hover {
         width: 100%;
         max-width: 300px;
     }
+}
+
+
+.nombre-eleves {
+    position: absolute;
+    right: 20px ;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
 }

@@ -36,7 +36,7 @@ section.form {
     background-color: transparent;
     border: 2px;
     padding: 30px; /* espace autour des éléments */
-    width: 420px; 
+    width: 28%; 
     border-radius: 20px;
     border: 2px solid rgba(255, 255, 255, 0.2); 
     backdrop-filter: blur(20px); /* effet de flou */
