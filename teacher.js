@@ -41,6 +41,8 @@ function afficherDonnees() {
         query = query.where("classe", "==", classeSelectionnee);
     }
 
+    query = query.orderBy("dateCreation", "desc");
+
     query.get().then((querySnapshot) => {
         let html = '';
         let nombreEleves = 0;
