@@ -31,8 +31,7 @@ header {
     margin-bottom: 30px;
 }
 
-h1,
-h2 {
+h1, h2 {
     color: #ffffff;
     margin-bottom: 20px;
 }
@@ -88,8 +87,7 @@ h2 {
     transform: rotateY(180deg);
 }
 
-.eleve-card-front,
-.eleve-card-back {
+.eleve-card-front, .eleve-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -127,9 +125,7 @@ h2 {
     justify-content: space-between;
 }
 
-.delete-btn,
-.view-qr-btn,
-.return-btn {
+.delete-btn, .view-qr-btn, .return-btn {
     padding: 10px 15px;
     border: none;
     border-radius: 15px;
@@ -147,13 +143,11 @@ h2 {
     background-color: #ff6b81;
 }
 
-.view-qr-btn,
-.return-btn {
+.view-qr-btn, .return-btn {
     background-color: #2ea0d5;
 }
 
-.view-qr-btn:hover,
-.return-btn:hover {
+.view-qr-btn:hover, .return-btn:hover {
     background-color: #7bbaed;
 }
 
@@ -166,11 +160,8 @@ h2 {
 
 [id^="qrcode-"] {
     width: 100%;
-    /* Ou une valeur fixe comme 300px */
     max-width: 300px;
-    /* Optionnel : limite la taille maximale */
     aspect-ratio: 1 / 1;
-    /* Garde le conteneur carré */
 }
 
 div.retour {
@@ -201,14 +192,9 @@ div.retour img:hover {
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-
 .container {
     padding-top: 4rem;
-    width: 1120;
 }
-
-
-
 
 .nombre-eleves {
     position: absolute;
@@ -223,13 +209,91 @@ div.retour img:hover {
     display: inline-block;
 }
 
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
+.login-container {
+    background-color: #000;
+    padding: 20px;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    padding-top: 12.5%;
+    color: white;
+}
 
+.login-container input {
+    padding: 20px;
+    border-radius: 25px;
+    outline: none;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding-right: 40px;
+}
 
+.login-container h2 {
+    padding: 20px;
+    text-align: center;
+    font-size: 32px;
+}
 
+.login-container input,
+.login-container button {    
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+}
 
+.login-container button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
 
+.login-container button:hover {
+    background-color: #45a049;
+}
 
+.loading-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 @media screen and (max-width: 768px) {
     body {
@@ -254,22 +318,16 @@ div.retour img:hover {
         padding-top: 3rem;
     }
 
-
-
     .eleve-card-front,
     .eleve-card-back {
         padding: 15px;
     }
 
-
     #eleves-list {
         display: flex;
         flex-direction: column;
-        /* Afficher les cartes en colonne */
         align-items: center;
-        /* Centrer les cartes */
     }
-
 
     .eleve-card h3 {
         font-size: 20px;
@@ -323,39 +381,4 @@ div.retour img:hover {
     .eleve-info p {
         font-size: 12px;
     }
-}
-
-
-.login-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.login-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.login-container input {
-    margin: 10px 0;
-    padding: 5px;
-}
-
-.login-container button {
-    padding: 5px 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
 }
