@@ -1,23 +1,58 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
-    authDomain: "gestion-des-qrcodes.firebaseapp.com",
-    projectId: "gestion-des-qrcodes",
-    storageBucket: "gestion-des-qrcodes.firebasestorage.app",
-    messagingSenderId: "118022748151",
-    appId: "1:118022748151:web:5a1df3c3eb636bf16b60f2",
-    measurementId: "G-9YMVMQJSRN"
+    apiKey: "FIREBASE_API_KEY",
+    authDomain: "FIREBASE_AUTH_DOMAIN",
+    projectId: "FIREBASE_PROJECT_ID",
+    storageBucket: "FIREBASE_STORAGE_BUCKET",
+    messagingSenderId: "FIREBASE_MESSAGING_SENDER_ID",
+    appId: "FIREBASE_APP_ID",
+    measurementId: "FIREBASE_MEASUREMENT_ID"
 };
 
+// Initialisation de Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// Variables globales
+let isAuthenticated = false;
+
+
+// Fonction pour vérifier le mot de passe
+function checkPassword() {
+    const passwordInput = document.getElementById('passwordInput');
+    db.collection("settings").doc("auth").get().then((doc) => {
+        if (doc.exists && doc.data().password === passwordInput.value) {
+            isAuthenticated = true;
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('container').style.display = 'block';
+            initializePage();
+        } else {
+            alert("Mot de passe incorrect. Veuillez réessayer.");
+        }
+    }).catch((error) => {
+        console.error("Erreur lors de la vérification du mot de passe:", error);
+    });
+}
+
+
+// Fonction pour initialiser la page après connexion
+function initializePage() {
+    chargerClasses();
+    afficherDonnees();
+}
+
+// Fonction pour charger les classes
 function chargerClasses() {
+    if (!isAuthenticated) {
+        console.error("Utilisateur non authentifié");
+        return;
+    }
     db.collection("eleves").get().then((querySnapshot) => {
         const classes = new Set();
         querySnapshot.forEach((doc) => {
             classes.add(doc.data().classe);
         });
         const selectElement = document.getElementById('classeSelect');
+        selectElement.innerHTML = '<option value="">Toutes les classes</option>';
         classes.forEach((classe) => {
             const option = document.createElement('option');
             option.value = classe;
@@ -29,11 +64,17 @@ function chargerClasses() {
     });
 }
 
+// Fonction pour tronquer le texte
 function tronquerTexte(texte, longueurMax) {
     return texte.length > longueurMax ? texte.substring(0, longueurMax - 3) + '...' : texte;
 }
 
+// Fonction pour afficher les données
 function afficherDonnees() {
+    if (!isAuthenticated) {
+        console.error("Utilisateur non authentifié");
+        return;
+    }
     const classeSelectionnee = document.getElementById('classeSelect').value;
     let query = db.collection("eleves");
     
@@ -70,7 +111,6 @@ function afficherDonnees() {
         });
         document.getElementById('eleves-list').innerHTML = html;
         
-
         const nombreElevesElement = document.getElementById('nombre-eleves');
         if (nombreElevesElement) {
             nombreElevesElement.textContent = `Nombre d'élèves : ${nombreEleves}`;
@@ -79,7 +119,6 @@ function afficherDonnees() {
         console.error("Erreur lors de la récupération des données:", error);
         document.getElementById('eleves-list').innerHTML = "<p>Erreur lors du chargement des données.</p>";
         
-
         const nombreElevesElement = document.getElementById('nombre-eleves');
         if (nombreElevesElement) {
             nombreElevesElement.textContent = "Nombre d'élèves : 0";
@@ -87,11 +126,16 @@ function afficherDonnees() {
     });
 }
 
+// Fonction pour supprimer un élève
 function supprimerEleve(eleveId) {
+    if (!isAuthenticated) {
+        console.error("Utilisateur non authentifié");
+        return;
+    }
     if (confirm("Êtes-vous sûr de vouloir supprimer cet élève ?")) {
         db.collection("eleves").doc(eleveId).delete().then(() => {
             console.log("Élève supprimé avec succès");
-            afficherDonnees(); 
+            afficherDonnees();
         }).catch((error) => {
             console.error("Erreur lors de la suppression de l'élève: ", error);
             alert("Erreur lors de la suppression de l'élève.");
@@ -99,32 +143,29 @@ function supprimerEleve(eleveId) {
     }
 }
 
+// Fonction pour voir le QR Code
 function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
     const encodedNom = encodeURIComponent(nom);
     const encodedPrenom = encodeURIComponent(prenom);
     const encodedClasse = encodeURIComponent(classe);
 
-
     const qrData = `Nom: ${encodedNom}, Prenom: ${encodedPrenom}, Classe: ${encodedClasse}, Date de création : ${dateCreation}`;
 
     const qrcodeElement = document.getElementById(`qrcode-${eleveId}`);
-    qrcodeElement.innerHTML = ''; 
+    qrcodeElement.innerHTML = '';
 
     const containerWidth = qrcodeElement.offsetWidth;
-
 
     const canvas = document.createElement('canvas');
     canvas.width = containerWidth;
     canvas.height = containerWidth;
     qrcodeElement.appendChild(canvas);
 
-    // Utilisez QRious avec le canvas créé
     new QRious({
         element: canvas,
         value: qrData,
         size: containerWidth,
     });
-
 
     const logo = new Image();
     logo.crossOrigin = "anonymous";
@@ -132,7 +173,7 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
     logo.onload = function () {
         const ctx = canvas.getContext('2d');
         if (ctx) {
-            const logoSize = containerWidth * 0.2; 
+            const logoSize = containerWidth * 0.2;
             const x = (canvas.width / 2) - (logoSize / 2);
             const y = (canvas.height / 2) - (logoSize / 2);
             ctx.drawImage(logo, x, y, logoSize, logoSize);
@@ -140,12 +181,9 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
             console.error('Unable to get 2D context from canvas');
         }
     };
-
-
 }
 
-
-
+// Fonction pour retourner la carte
 function retournerCarte(button) {
     const card = button.closest('.eleve-card');
     card.classList.toggle('flipped');
@@ -160,11 +198,11 @@ function retournerCarte(button) {
     }
 }
 
+// Fonction pour retourner à l'accueil
 function retourAccueil() {
     window.location.href = 'home.html';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    chargerClasses();
-    afficherDonnees();
+    document.getElementById('loginOverlay').style.display = 'flex';
 });

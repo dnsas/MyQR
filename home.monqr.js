@@ -1,11 +1,11 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
-  authDomain: "gestion-des-qrcodes.firebaseapp.com",
-  projectId: "gestion-des-qrcodes",
-  storageBucket: "gestion-des-qrcodes.firebasestorage.app",
-  messagingSenderId: "118022748151",
-  appId: "1:118022748151:web:5a1df3c3eb636bf16b60f2",
-  measurementId: "G-9YMVMQJSRN"
+  apiKey: "FIREBASE_API_KEY",
+  authDomain: "FIREBASE_AUTH_DOMAIN",
+  projectId: "FIREBASE_PROJECT_ID",
+  storageBucket: "FIREBASE_STORAGE_BUCKET",
+  messagingSenderId: "FIREBASE_MESSAGING_SENDER_ID",
+  appId: "FIREBASE_APP_ID",
+  measurementId: "FIREBASE_MEASUREMENT_ID"
 };
 
 firebase.initializeApp(firebaseConfig);
