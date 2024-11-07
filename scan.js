@@ -55,12 +55,12 @@ Instascan.Camera.getCameras()
             scanner.start(cameras[cameraSelector.value]);
         } else {
             console.error('Aucune caméra trouvée.');
-            alert('Aucune caméra trouvée. Vérifiez vos paramètres de caméra.');
+            showErrorAlert('Aucune caméra trouvée. Vérifiez vos paramètres de caméra.');
         }
     })
     .catch(e => {
         console.error('Erreur : ', e);
-        alert('Erreur lors de l\'accès à la caméra. Assurez-vous que les permissions sont accordées.');
+        showErrorAlert('Erreur lors de l\'accès à la caméra. Assurez-vous que les permissions sont accordées.');
     });
 
 function retourAccueil() {

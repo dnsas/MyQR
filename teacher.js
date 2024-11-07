@@ -1,4 +1,4 @@
-// Configuration Firebase
+
 const firebaseConfig = {
     apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
     authDomain: "gestion-des-qrcodes.firebaseapp.com",
@@ -9,7 +9,7 @@ const firebaseConfig = {
     measurementId: "G-9YMVMQJSRN"
 };
 
-// Initialisation de Firebase
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -31,13 +31,14 @@ function checkPassword() {
             isAuthenticated = true;
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('container').style.display = 'block';
+            showSuccessAlert("Connexion réussie !");
             initializePage();
         } else {
-            alert("Mot de passe incorrect. Veuillez réessayer.");
+            showErrorAlert("Mot de passe incorrect. Veuillez réessayer.");
         }
         hideLoadingSpinner();
     }).catch((error) => {
-        console.error("Erreur lors de la vérification du mot de passe:", error);
+        showErrorAlert("Erreur lors de la vérification du mot de passe. Veuillez réessayer.");
         hideLoadingSpinner();
     });
 }
@@ -211,6 +212,35 @@ function retourAccueil() {
     window.location.href = 'home.html';
 }
 
+function showAlert(message, type) {
+    const alertContainer = document.getElementById('alert-container');
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+    alertContainer.appendChild(alert);
+
+    setTimeout(() => {
+        alert.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+        alert.classList.remove('show');
+        setTimeout(() => {
+            alertContainer.removeChild(alert);
+        }, 300);
+    }, 3000);
+}
+
+function showSuccessAlert(message) {
+    showAlert(message, 'success');
+}
+
+function showErrorAlert(message) {
+    showAlert(message, 'danger');
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('loginOverlay').style.display = 'flex';
 });
+

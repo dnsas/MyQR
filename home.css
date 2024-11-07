@@ -221,3 +221,32 @@ div.scan img:hover, div.teacher img:hover{
         transition: 1s;
     }
 }
+
+.alert-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.alert {
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.alert-success {
+    background-color: rgba(76, 175, 80, 0.9);
+}
+
+.alert-danger {
+    background-color: rgba(244, 67, 54, 0.9);
+}
+
+.alert.show {
+    opacity: 1;
+}
