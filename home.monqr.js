@@ -8,7 +8,6 @@ const firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
-export default firebaseConfig;
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
