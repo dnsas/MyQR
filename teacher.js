@@ -1,11 +1,11 @@
 const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.FIREBASE_APP_ID,
-    measurementId: process.env.FIREBASE_MEASUREMENT_ID
+    apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
+    authDomain: "gestion-des-qrcodes.firebaseapp.com",
+    projectId: "gestion-des-qrcodes",
+    storageBucket: "gestion-des-qrcodes.firebasestorage.app",
+    messagingSenderId: "118022748151",
+    appId: "1:118022748151:web:5a1df3c3eb636bf16b60f2",
+    measurementId: "G-9YMVMQJSRN"
 };
 
 // Initialisation de Firebase
