@@ -7,11 +7,20 @@ const resultDiv = document.getElementById('result');
 const qrDataList = document.getElementById('qrDataList');
 const rescanButton = document.getElementById('rescanButton');
 
+function showLoadingSpinner() {
+    document.getElementById('loading-spinner').style.display = 'flex';
+}
+
+function hideLoadingSpinner() {
+    document.getElementById('loading-spinner').style.display = 'none';
+}
+
 scanner.addListener('scan', function (content) {
     displayQRData(content);
     resultDiv.style.display = 'block';
     console.log('Données scannées : ', content);
     scanner.stop();
+    showSuccessAlert('QR Code scanné avec succès !');
 });
 
 function displayQRData(content) {
@@ -34,15 +43,44 @@ function displayQRData(content) {
 rescanButton.addEventListener('click', function () {
     resultDiv.style.display = 'none';
     qrDataList.innerHTML = '';
-    scanner.start(cameras[cameraSelector.value]);
+    showLoadingSpinner();
+    scanner.start(cameras[cameraSelector.value])
+        .then(() => {
+            hideLoadingSpinner();
+            showSuccessAlert('Scanner prêt pour un nouveau scan.');
+        })
+        .catch(error => {
+            hideLoadingSpinner();
+            showErrorAlert('Erreur lors du démarrage du scanner.');
+        });
 });
 
 // Vérification de la compatibilité avec getUserMedia
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    console.log("Accès aux médias autorisé");
+    showLoadingSpinner();
 
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            hideLoadingSpinner();
+            showSuccessAlert("Accès à la caméra autorisé");
+            stream.getTracks().forEach(track => track.stop()); // Arrêter le flux immédiatement
+            initializeScanner();
+        })
+        .catch(function(error) {
+            hideLoadingSpinner();
+            showErrorAlert("Accès à la caméra refusé. Veuillez autoriser l'accès et recharger la page.");
+            console.error("Erreur d'accès à la caméra:", error);
+        });
+} else {
+    showErrorAlert("Votre navigateur ne supporte pas l'accès à la caméra.");
+    console.error('API getUserMedia non supportée');
+}
+
+function initializeScanner() {
+    showLoadingSpinner();
     Instascan.Camera.getCameras()
         .then(cameras => {
+            hideLoadingSpinner();
             if (cameras.length > 0) {
                 cameras.forEach((camera, index) => {
                     const option = document.createElement('option');
@@ -51,28 +89,39 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     cameraSelector.add(option);
                 });
 
-                // Lorsque l'utilisateur choisit une caméra
                 cameraSelector.addEventListener('change', function () {
+                    showLoadingSpinner();
                     scanner.stop();
-                    scanner.start(cameras[cameraSelector.value]);
+                    scanner.start(cameras[cameraSelector.value])
+                        .then(() => {
+                            hideLoadingSpinner();
+                            showSuccessAlert('Caméra changée avec succès.');
+                        })
+                        .catch(error => {
+                            hideLoadingSpinner();
+                            showErrorAlert('Erreur lors du changement de caméra.');
+                        });
                 });
 
-                // Démarrer le scanner avec la première caméra disponible
-                scanner.start(cameras[cameraSelector.value]);
-
+                showLoadingSpinner();
+                scanner.start(cameras[cameraSelector.value])
+                    .then(() => {
+                        hideLoadingSpinner();
+                        showSuccessAlert('Scanner initialisé et prêt à l\'emploi.');
+                    })
+                    .catch(error => {
+                        hideLoadingSpinner();
+                        showErrorAlert('Erreur lors de l\'initialisation du scanner.');
+                    });
             } else {
-                console.error('Aucune caméra trouvée.');
                 showErrorAlert('Aucune caméra disponible. Vérifiez vos paramètres de caméra.');
             }
         })
         .catch(e => {
-            console.error('Erreur lors de l\'accès aux caméras : ', e);
+            hideLoadingSpinner();
             showErrorAlert('Erreur lors de l\'accès à la caméra. Assurez-vous que les permissions sont accordées.');
+            console.error('Erreur lors de l\'accès aux caméras : ', e);
         });
-
-} else {
-    console.error('API getUserMedia non supportée');
-    showErrorAlert("Votre navigateur ne supporte pas l'accès à la caméra.");
 }
 
 function retourAccueil() {

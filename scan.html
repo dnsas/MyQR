@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="scan.css">
 </head>
 <body>
-    <div id="alert-container" class="alert-container"></div>
     <div class="container">
+        <div id="alert-container" class="alert-container"></div>
         <section class="form">
             <div class="retour">
                 <button onclick="retourAccueil()">
@@ -25,6 +25,9 @@
             </div>
             <div class="video-container">
                 <video id="preview" autoplay></video>
+            </div>
+            <div id="loading-spinner" class="loading-spinner" style="display: none;">
+                <div class="spinner"></div>
             </div>
         </section>
 
