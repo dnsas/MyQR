@@ -207,6 +207,36 @@ div.retour img:hover {
 }
 
 
+@media screen and (max-width: 768px) {
+    div.retour {
+        top: 0.5rem;
+        left: 0.5rem;
+    }
+
+    div.retour img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+
+    .container {
+        padding-top: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .eleve-card {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .eleve-card {
+        width: 100%;
+        max-width: 300px;
+    }
+}
 
 
 .nombre-eleves {
@@ -253,7 +283,12 @@ div.retour img:hover {
         padding-top: 3rem;
     }
 
-
+    .eleve-card {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        /* Permettre une hauteur flexible */
+    }
 
     .eleve-card-front,
     .eleve-card-back {
@@ -269,6 +304,16 @@ div.retour img:hover {
         /* Centrer les cartes */
     }
 
+    .eleve-card {
+        width: 100%;
+        /* Prendre toute la largeur */
+        max-width: none;
+        /* Supprimer la limite de largeur */
+        height: auto;
+        /* Permettre une hauteur flexible */
+        margin-bottom: 20px;
+        /* Espace entre les cartes */
+    }
 
     .eleve-card h3 {
         font-size: 20px;
@@ -313,6 +358,10 @@ div.retour img:hover {
 
     #classeSelect {
         font-size: 14px;
+    }
+
+    .eleve-card {
+        max-width: 250px;
     }
 
     .eleve-card h3 {
