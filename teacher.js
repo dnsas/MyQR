@@ -70,7 +70,7 @@ function afficherDonnees() {
         });
         document.getElementById('eleves-list').innerHTML = html;
         
-        // Afficher le nombre d'élèves
+
         const nombreElevesElement = document.getElementById('nombre-eleves');
         if (nombreElevesElement) {
             nombreElevesElement.textContent = `Nombre d'élèves : ${nombreEleves}`;
@@ -79,7 +79,7 @@ function afficherDonnees() {
         console.error("Erreur lors de la récupération des données:", error);
         document.getElementById('eleves-list').innerHTML = "<p>Erreur lors du chargement des données.</p>";
         
-        // Réinitialiser le compteur en cas d'erreur
+
         const nombreElevesElement = document.getElementById('nombre-eleves');
         if (nombreElevesElement) {
             nombreElevesElement.textContent = "Nombre d'élèves : 0";
@@ -91,7 +91,7 @@ function supprimerEleve(eleveId) {
     if (confirm("Êtes-vous sûr de vouloir supprimer cet élève ?")) {
         db.collection("eleves").doc(eleveId).delete().then(() => {
             console.log("Élève supprimé avec succès");
-            afficherDonnees(); // Rafraîchir la liste après suppression
+            afficherDonnees(); 
         }).catch((error) => {
             console.error("Erreur lors de la suppression de l'élève: ", error);
             alert("Erreur lors de la suppression de l'élève.");
@@ -100,24 +100,22 @@ function supprimerEleve(eleveId) {
 }
 
 function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
-    // Encodez les données de la même manière que dans home.monqr.js
     const encodedNom = encodeURIComponent(nom);
     const encodedPrenom = encodeURIComponent(prenom);
     const encodedClasse = encodeURIComponent(classe);
 
-    // Formatez les données exactement comme dans home.monqr.js
+
     const qrData = `Nom: ${encodedNom}, Prenom: ${encodedPrenom}, Classe: ${encodedClasse}, Date de création : ${dateCreation}`;
 
     const qrcodeElement = document.getElementById(`qrcode-${eleveId}`);
-    qrcodeElement.innerHTML = ''; // Effacer le contenu précédent
+    qrcodeElement.innerHTML = ''; 
 
-    // Obtenez la largeur du conteneur
     const containerWidth = qrcodeElement.offsetWidth;
 
-    // Créez un élément canvas manuellement
+
     const canvas = document.createElement('canvas');
     canvas.width = containerWidth;
-    canvas.height = containerWidth; // Gardez le QR code carré
+    canvas.height = containerWidth;
     qrcodeElement.appendChild(canvas);
 
     // Utilisez QRious avec le canvas créé
@@ -127,14 +125,14 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
         size: containerWidth,
     });
 
-    // Ajoutez le logo si nécessaire
+
     const logo = new Image();
     logo.crossOrigin = "anonymous";
     logo.src = 'logo.png';
     logo.onload = function () {
         const ctx = canvas.getContext('2d');
         if (ctx) {
-            const logoSize = containerWidth * 0.2; // Ajustez la taille du logo en fonction de la taille du conteneur
+            const logoSize = containerWidth * 0.2; 
             const x = (canvas.width / 2) - (logoSize / 2);
             const y = (canvas.height / 2) - (logoSize / 2);
             ctx.drawImage(logo, x, y, logoSize, logoSize);
