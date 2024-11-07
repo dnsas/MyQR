@@ -117,6 +117,8 @@ div.scan button, div.teacher button {
     padding: 10px;
 }
 
+
+
 div.scan img, div.teacher img {
     height: auto;
     filter: grayscale(100%);
@@ -199,4 +201,23 @@ div.scan img:hover, div.teacher img:hover{
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+
+@media screen and (max-width: 768px) {
+    div.teacher {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+    }
+    
+    div.scan img, div.teacher img {
+        height: auto;
+        filter: grayscale(100%);
+        background-color: white;
+        border-radius: 30px;
+        width: 80px;
+        height: auto;
+        transition: 1s;
+    }
 }
