@@ -96,7 +96,7 @@ function generateQRCode() {
       logo.src = 'logo.png';
       logo.onload = function () {
         // Dessiner le logo au premier plan
-        const logoSize = canvasSize * 0.2; // Taille du logo (20% de la taille du canvas)
+        const logoSize = canvasSize * 1; // Taille du logo (20% de la taille du canvas)
         const x = (canvas.width / 2) - (logoSize / 2);
         const y = (canvas.height / 2) - (logoSize / 2);
         ctx.drawImage(logo, x, y, logoSize, logoSize);
