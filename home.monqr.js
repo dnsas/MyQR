@@ -38,6 +38,28 @@ function showErrorAlert(message) {
     showAlert(message, 'danger');
 }
 
+function createStylizedBackground(canvas, width, height) {
+    const ctx = canvas.getContext('2d');
+    
+    // Créer un dégradé pour le fond
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#0099ff');
+    gradient.addColorStop(1, '#6600ff');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+    
+    // Ajouter des formes géométriques
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+    for (let i = 0; i < 20; i++) {
+        const x = Math.random() * width;
+        const y = Math.random() * height;
+        const size = Math.random() * 50 + 10;
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
 function generateQRCode() {
   const nom = encodeURIComponent(document.querySelector('.nom').value.trim());
   const prenom = encodeURIComponent(document.querySelector('.prenom').value.trim());
@@ -71,20 +93,35 @@ function generateQRCode() {
       console.log("Document written with ID: ", docRef.id);
 
       const canvas = document.getElementById('qrCanvas');
+      const ctx = canvas.getContext('2d');
+      const size = 500; // Augmentez la taille pour un meilleur rendu
+      canvas.width = size;
+      canvas.height = size;
+
+      // Créer le fond stylisé
+      createStylizedBackground(canvas, size, size);
+
+      // Générer le QR code
       const qr = new QRious({
         element: canvas,
         value: qrData,
-        size: 300,
+        size: size * 0.7, // Le QR code occupe 70% de la taille totale
+        backgroundAlpha: 0 // QR code transparent
       });
 
+      // Centrer le QR code sur le canvas
+      const qrSize = size * 0.7;
+      const qrPosition = (size - qrSize) / 2;
+      ctx.drawImage(canvas, 0, 0, qrSize, qrSize, qrPosition, qrPosition, qrSize, qrSize);
+
+      // Ajouter le logo
       const logo = new Image();
       logo.crossOrigin = "anonymous";
       logo.src = 'logo.png';
       logo.onload = function () {
-        const ctx = canvas.getContext('2d');
-        const logoSize = 60;
-        const x = (canvas.width / 2) - (logoSize / 2);
-        const y = (canvas.height / 2) - (logoSize / 2);
+        const logoSize = size * 0.2; // Le logo occupe 20% de la taille totale
+        const x = (size / 2) - (logoSize / 2);
+        const y = (size / 2) - (logoSize / 2);
         ctx.drawImage(logo, x, y, logoSize, logoSize);
 
         document.getElementById('loading-spinner').style.display = 'none';
