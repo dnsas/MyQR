@@ -82,9 +82,11 @@ function generateQRCode() {
       logo.src = 'logo.png';
       logo.onload = function () {
         const ctx = canvas.getContext('2d');
-        const logoSize = 60;
-        const x = (canvas.width / 2) - (logoSize / 2);
-        const y = (canvas.height / 2) - (logoSize / 2);
+        
+        // Ajuster la taille du logo pour couvrir l'ensemble du QR Code
+        const logoSize = canvas.width;  // Taille du logo égale à celle du QR Code
+        const x = 0;  // Position de départ x
+        const y = 0;  // Position de départ y
         ctx.drawImage(logo, x, y, logoSize, logoSize);
 
         document.getElementById('loading-spinner').style.display = 'none';
