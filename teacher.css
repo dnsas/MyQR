@@ -298,93 +298,7 @@ div.retour img:hover {
     100% { transform: rotate(360deg); }
 }
 
-@media screen and (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
 
-    .container {
-        padding: 20px;
-    }
-
-    div.retour {
-        top: 0.5rem;
-        left: 0.5rem;
-    }
-
-    div.retour img {
-        width: 2rem;
-        height: 2rem;
-    }
-
-    .container {
-        padding-top: 3rem;
-    }
-
-    .eleve-card-front,
-    .eleve-card-back {
-        padding: 15px;
-    }
-
-    #eleves-list {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .eleve-card h3 {
-        font-size: 20px;
-    }
-
-    .eleve-info p {
-        font-size: 14px;
-    }
-
-    .button-group {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .delete-btn,
-    .view-qr-btn,
-    .return-btn {
-        width: 100%;
-    }
-
-    .nombre-eleves {
-        position: static;
-        display: block;
-        text-align: center;
-        margin-bottom: 15px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    body {
-        padding: 5px;
-    }
-
-    .container {
-        padding: 15px;
-    }
-
-    h1,
-    h2 {
-        font-size: 24px;
-    }
-
-    #classeSelect {
-        font-size: 14px;
-    }
-
-    .eleve-card h3 {
-        font-size: 18px;
-    }
-
-    .eleve-info p {
-        font-size: 12px;
-    }
-}
 
 .alert-container {
     position: fixed;
@@ -463,4 +377,104 @@ div.retour img:hover {
 }
 .cancel-btn:hover {
     transform: scale(1.2);
+}
+
+
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    div.retour {
+        top: 0.5rem;
+        left: 0.5rem;
+    }
+
+    div.retour img {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .container {
+        padding-top: 3rem;
+    }
+
+    .eleve-card-front,
+    .eleve-card-back {
+        padding: 15px;
+    }
+
+    #eleves-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .eleve-card h3 {
+        font-size: 20px;
+    }
+
+    .eleve-info p {
+        font-size: 14px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .delete-btn,
+    .view-qr-btn,
+    .return-btn {
+        width: 100%;
+    }
+
+    .nombre-eleves {
+        position: static;
+        display: block;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .dialog-content {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    h1,
+    h2 {
+        font-size: 24px;
+    }
+
+    #classeSelect {
+        font-size: 14px;
+    }
+
+    .eleve-card h3 {
+        font-size: 18px;
+    }
+
+    .eleve-info p {
+        font-size: 12px;
+    }
+    .dialog-content {
+        width: 70%;
+    }
+    .eleve-card-inner {
+        width: 70%;
+    }
 }
