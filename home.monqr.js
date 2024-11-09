@@ -71,21 +71,34 @@ function generateQRCode() {
       console.log("Document written with ID: ", docRef.id);
 
       const canvas = document.getElementById('qrCanvas');
-      const qr = new QRious({
-        element: canvas,
-        value: qrData,
-        size: 300,
-      });
+      const ctx = canvas.getContext('2d');
+      const canvasSize = 300;
+      canvas.width = canvasSize;
+      canvas.height = canvasSize;
 
+      // Charger le logo
       const logo = new Image();
       logo.crossOrigin = "anonymous";
       logo.src = 'logo.png';
       logo.onload = function () {
-        const ctx = canvas.getContext('2d');
-        const logoSize = 60;
-        const x = (canvas.width / 2) - (logoSize / 2);
-        const y = (canvas.height / 2) - (logoSize / 2);
-        ctx.drawImage(logo, x, y, logoSize, logoSize);
+        // Dessiner le logo en arrière-plan
+        ctx.globalAlpha = 0.1; // Opacité réduite pour le logo en arrière-plan
+        ctx.drawImage(logo, 0, 0, canvasSize, canvasSize);
+        ctx.globalAlpha = 1.0;
+
+        // Créer un arrière-plan flou
+        ctx.filter = 'blur(5px)';
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.fillRect(0, 0, canvasSize, canvasSize);
+        ctx.filter = 'none';
+
+        // Générer le QR code
+        const qr = new QRious({
+          element: canvas,
+          value: qrData,
+          size: canvasSize,
+          backgroundAlpha: 0,
+        });
 
         document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
@@ -97,9 +110,6 @@ function generateQRCode() {
       logo.onerror = function () {
         console.error("Erreur de chargement du logo");
         document.getElementById('loading-spinner').style.display = 'none';
-        document.querySelector('.qr_code').style.display = 'block';
-        document.getElementById('downloadBtn').style.display = 'block';
-        document.getElementById('shareBtn').style.display = 'block';
         showErrorAlert("Erreur de chargement du logo, mais le QR Code a été généré.");
       };
     })
