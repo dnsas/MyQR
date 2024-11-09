@@ -86,7 +86,6 @@ section h1 {
 }
 
 section.navigation {
-    padding: 20px;
 }
 
 .navbar {
@@ -100,13 +99,14 @@ section.navigation {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border-radius: 30px;
+    border-radius: 60px;
     padding: 10px 20px;
-    width: 90%;
+    width: 60%;
+    height: 10%;
     max-width: 600px;
 }
 
-.nav-item, .navbar-brand {
+.nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -142,7 +142,7 @@ div.scan button, div.teacher button, div.home button{
 
 
 
-div.scan img,div.teacher img, div.home img {
+div.scan img,div.teacher img{
     width: 50px;
     height: auto;
     filter: grayscale(100%);
@@ -151,7 +151,16 @@ div.scan img,div.teacher img, div.home img {
     transition: 1s;
 }
 
-div.scan img:hover, div.teacher img:hover {
+div.home img {
+    width: 65px;
+    height: auto;
+    filter: grayscale(100%);
+    background-color: white;
+    border-radius: 50%;
+    transition: 1s;
+}
+
+div.scan img:hover, div.teacher img:hover, div.home img:hover {
     filter: invert(1);
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
@@ -254,8 +263,6 @@ div.scan img:hover, div.teacher img:hover {
 
 @media screen and (max-width: 768px) {
     .navbar {
-        flex-wrap: wrap;
-        justify-content: space-between;
         padding: 10px;
         top: 10px;
     }

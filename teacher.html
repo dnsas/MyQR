@@ -22,35 +22,37 @@
             <button onclick="checkPassword()">Se connecter</button>
         </div>
     </div>
-    <div class="container" id="container" style="display: none;">
-        <div class="retour">
-            <button onclick="retourAccueil()">
-                <img src="retour.png" alt="Scanner QR Code">
-            </button>
-        </div>
-        <header>
-            <h1>Gestion des Élèves</h1>
-        </header>
-        <section class="form">
-            <h2>Filtrer par Classe</h2>
-            <div class="input-box">
-                <select id="classeSelect" onchange="afficherDonnees()">
-                    <option value="">Toutes les classes</option>
-                </select>
+    <section class="content">
+        <div class="container" id="container" style="display: none;">
+            <div class="retour">
+                <button onclick="retourAccueil()">
+                    <img src="retour.png" alt="Scanner QR Code">
+                </button>
             </div>
-        </section>
-        <div id="nombre-eleves" class="nombre-eleves">Nombre d'élèves : 0</div>
-        <section class="eleves-data">
-            <h2>Liste des Élèves</h2>
-            <div id="eleves-list"></div>
-        </section>
-    </div>
+            <header>
+                <h1>Gestion des Élèves</h1>
+            </header>
+            <section class="form">
+                <h2>Filtrer par Classe</h2>
+                <div class="input-box">
+                    <select id="classeSelect" onchange="afficherDonnees()">
+                        <option value="">Toutes les classes</option>
+                    </select>
+                </div>
+            </section>
+            <div id="nombre-eleves" class="nombre-eleves">Nombre d'élèves : 0</div>
+            <section class="eleves-data">
+                <h2>Liste des Élèves</h2>
+                <div id="eleves-list"></div>
+            </section>
+        </div>
 
-    <div id="loading-spinner" class="loading-spinner" style="display: none;">
-        <div class="spinner"></div>
-    </div>
+        <div id="loading-spinner" class="loading-spinner" style="display: none;">
+            <div class="spinner"></div>
+        </div>
 
-    <script src="teacher.js"></script>
+        <script src="teacher.js"></script>
+    </section>
 </body>
 
 </html>
