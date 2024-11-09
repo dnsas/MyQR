@@ -168,7 +168,6 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
     border: 1px solid #ccc;
     padding: 15px;
     border-radius: 20px;
