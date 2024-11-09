@@ -76,29 +76,30 @@ function generateQRCode() {
       canvas.width = canvasSize;
       canvas.height = canvasSize;
 
+      // Générer le QR code
+      const qr = new QRious({
+        element: canvas,
+        value: qrData,
+        size: canvasSize,
+        backgroundAlpha: 0, // Fond transparent pour le QR Code
+      });
+
+      // Appliquer un flou à l'arrière-plan
+      ctx.filter = 'blur(5px)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'; // Couleur blanche semi-transparente
+      ctx.fillRect(0, 0, canvasSize, canvasSize);
+      ctx.filter = 'none'; // Réinitialiser le filtre
+
       // Charger le logo
       const logo = new Image();
       logo.crossOrigin = "anonymous";
       logo.src = 'logo.png';
       logo.onload = function () {
-        // Dessiner le logo en arrière-plan
-        ctx.globalAlpha = 0.1; // Opacité réduite pour le logo en arrière-plan
-        ctx.drawImage(logo, 0, 0, canvasSize, canvasSize);
-        ctx.globalAlpha = 1.0;
-
-        // Créer un arrière-plan flou
-        ctx.filter = 'blur(5px)';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-        ctx.fillRect(0, 0, canvasSize, canvasSize);
-        ctx.filter = 'none';
-
-        // Générer le QR code
-        const qr = new QRious({
-          element: canvas,
-          value: qrData,
-          size: canvasSize,
-          backgroundAlpha: 0,
-        });
+        // Dessiner le logo au premier plan
+        const logoSize = canvasSize * 0.2; // Taille du logo (20% de la taille du canvas)
+        const x = (canvas.width / 2) - (logoSize / 2);
+        const y = (canvas.height / 2) - (logoSize / 2);
+        ctx.drawImage(logo, x, y, logoSize, logoSize);
 
         document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
