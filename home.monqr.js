@@ -82,11 +82,13 @@ function generateQRCode() {
       logo.src = 'logo.png';
       logo.onload = function () {
         const ctx = canvas.getContext('2d');
-        
-        // Ajuster la taille du logo pour couvrir l'ensemble du QR Code
-        const logoSize = canvas.width;  // Taille du logo égale à celle du QR Code
-        const x = 0;  // Position de départ x
-        const y = 0;  // Position de départ y
+
+        // Taille du logo au premier plan
+        const logoSize = 60;  // Ajuster cette taille si nécessaire
+        const x = (canvas.width / 2) - (logoSize / 2);
+        const y = (canvas.height / 2) - (logoSize / 2);
+
+        // Dessiner le logo par-dessus le QR Code
         ctx.drawImage(logo, x, y, logoSize, logoSize);
 
         document.getElementById('loading-spinner').style.display = 'none';
@@ -111,6 +113,9 @@ function generateQRCode() {
       showErrorAlert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
     });
 }
+
+
+
 
 function downloadQRCode() {
   const canvas = document.getElementById('qrCanvas');
