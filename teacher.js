@@ -235,7 +235,7 @@ function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
     logo.onload = function () {
         const ctx = canvas.getContext('2d');
         if (ctx) {
-            const logoSize = containerWidth * 0.2;
+            const logoSize = containerWidth * 1.3;
             const x = (canvas.width / 2) - (logoSize / 2);
             const y = (canvas.height / 2) - (logoSize / 2);
             ctx.drawImage(logo, x, y, logoSize, logoSize);
