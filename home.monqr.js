@@ -1,4 +1,3 @@
-// Configuration de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
   authDomain: "gestion-des-qrcodes.firebaseapp.com",
@@ -13,30 +12,30 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 function showAlert(message, type) {
-  const alertContainer = document.getElementById('alert-container');
-  const alert = document.createElement('div');
-  alert.className = `alert alert-${type}`;
-  alert.textContent = message;
-  alertContainer.appendChild(alert);
+    const alertContainer = document.getElementById('alert-container');
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+    alertContainer.appendChild(alert);
 
-  setTimeout(() => {
-    alert.classList.add('show');
-  }, 100);
-
-  setTimeout(() => {
-    alert.classList.remove('show');
     setTimeout(() => {
-      alertContainer.removeChild(alert);
-    }, 300);
-  }, 3000);
+        alert.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+        alert.classList.remove('show');
+        setTimeout(() => {
+            alertContainer.removeChild(alert);
+        }, 300);
+    }, 3000);
 }
 
 function showSuccessAlert(message) {
-  showAlert(message, 'success');
+    showAlert(message, 'success');
 }
 
 function showErrorAlert(message) {
-  showAlert(message, 'danger');
+    showAlert(message, 'danger');
 }
 
 function generateQRCode() {
@@ -62,49 +61,68 @@ function generateQRCode() {
 
   const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
-  // Chemin du logo (mettre à `null` si vous ne voulez pas de logo)
-  const logoPath = 'logo.png'; // Remplacez par `null` pour pas de logo
-  
-  // Configuration de QRCodeStyling
-  const qrCodeConfig = {
-    width: 300,
-    height: 300,
-    data: qrData,
-    dotsOptions: {
-      color: "#000000",
-      type: "rounded" // Remplace les carrés par des points arrondis
-    },
-    backgroundOptions: {
-      color: "transparent" // Assure un fond transparent
-    },
-    imageOptions: {
-      crossOrigin: "anonymous",
-      margin: 10
-    }
+  // Générer le QR code sans afficher l'image sur le canvas
+  const qr = new QRious({
+    value: qrData,
+    size: 300,
+    background: null,    // Supprime le fond blanc du QR code
+    backgroundAlpha: 0,  // Assure que l'arrière-plan est transparent
+  });
+
+  // Création du canvas
+  const canvas = document.getElementById('qrCanvas');
+  const ctx = canvas.getContext('2d');
+  const canvasSize = 300;
+  canvas.width = canvasSize;
+  canvas.height = canvasSize;
+
+  // Redessiner le QR code avec des points (cercles)
+  const qrModules = qr._qr.modules; // Obtenir les modules du QR code
+  const moduleSize = canvasSize / qrModules.length;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Effacer le canvas
+
+  qrModules.forEach((row, y) => {
+    row.forEach((module, x) => {
+      if (module) {
+        const centerX = x * moduleSize + moduleSize / 2;
+        const centerY = y * moduleSize + moduleSize / 2;
+        const radius = moduleSize / 3; // Taille du point (cercle)
+
+        // Dessiner un cercle au lieu d'un carré
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+        ctx.fillStyle = '#000'; // Couleur du point (noir)
+        ctx.fill();
+      }
+    });
+  });
+
+  // Charger le logo et l'ajouter par-dessus le QR code
+  const logo = new Image();
+  logo.crossOrigin = "anonymous";
+  logo.src = 'logo.png';
+  logo.onload = function () {
+    const logoSize = canvasSize * 1.5;
+    const x = (canvas.width / 2) - (logoSize / 2);
+    const y = (canvas.height / 2) - (logoSize / 2);
+
+    ctx.drawImage(logo, x, y, logoSize, logoSize);
+
+    document.getElementById('loading-spinner').style.display = 'none';
+    document.querySelector('.qr_code').style.display = 'block';
+    document.getElementById('downloadBtn').style.display = 'block';
+    document.getElementById('shareBtn').style.display = 'block';
+    showSuccessAlert("QR Code généré avec succès !");
   };
 
-  // Ajouter le logo seulement s'il est défini
-  if (logoPath) {
-    qrCodeConfig.image = logoPath;
-    qrCodeConfig.imageOptions = {
-      hideBackgroundDots: true,  // Cache les points sous le logo
-      imageSize: 0.4,           // Ajuste la taille du logo
-      margin: 8
-    };
-  }
+  logo.onerror = function () {
+    console.error("Erreur de chargement du logo");
+    document.getElementById('loading-spinner').style.display = 'none';
+    showErrorAlert("Erreur de chargement du logo, mais le QR Code a été généré.");
+  };
 
-  const qrCode = new QRCodeStyling(qrCodeConfig);
-
-  // Afficher le QR code dans le conteneur
-  qrCode.append(document.getElementById("qrCanvasContainer"));
-
-  document.getElementById('loading-spinner').style.display = 'none';
-  document.querySelector('.qr_code').style.display = 'block';
-  document.getElementById('downloadBtn').style.display = 'block';
-  document.getElementById('shareBtn').style.display = 'block';
-  showSuccessAlert("QR Code généré avec succès !");
-
-  // Enregistrer les données dans Firestore
+  // Ensuite, enregistrer les données dans la base
   db.collection("eleves").add({
     nom: nom,
     prenom: prenom,
@@ -112,33 +130,44 @@ function generateQRCode() {
     dateCreation: date
   })
     .then((docRef) => {
-      console.log("Document écrit avec ID: ", docRef.id);
+      console.log("Document written with ID: ", docRef.id);
     })
     .catch((error) => {
-      console.error("Erreur lors de l'ajout du document: ", error);
+      console.error("Error adding document: ", error);
       showErrorAlert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
     });
 }
 
+
+
+
 function downloadQRCode() {
-  const qrCodeContainer = document.getElementById('qrCanvasContainer');
-  if (!qrCodeContainer) {
-    showErrorAlert('Erreur : QR Code non trouvé !');
+  const canvas = document.getElementById('qrCanvas');
+  if (!canvas) {
+    showErrorAlert('Erreur : Canvas non trouvé !');
     return;
   }
 
-  qrCode.download({ name: "qrcode", extension: "png" });
-  showSuccessAlert('QR Code téléchargé avec succès !');
+  try {
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/png');
+    link.download = 'qrcode.png';
+    link.click();
+    showSuccessAlert('QR Code téléchargé avec succès !');
+  } catch (error) {
+    console.error('Error creating download link:', error);
+    showErrorAlert("Une erreur s'est produite lors du téléchargement. Veuillez réessayer.");
+  }
 }
 
 function shareQRCode() {
-  const qrCodeContainer = document.getElementById('qrCanvasContainer');
-  if (!qrCodeContainer) {
-    showErrorAlert('Erreur : QR Code non trouvé !');
+  const canvas = document.getElementById('qrCanvas');
+  if (!canvas) {
+    showErrorAlert('Erreur : Canvas non trouvé !');
     return;
   }
 
-  qrCodeContainer.toBlob(function (blob) {
+  canvas.toBlob(function (blob) {
     const file = new File([blob], "qrcode.png", { type: "image/png" });
     const shareData = {
       files: [file],
