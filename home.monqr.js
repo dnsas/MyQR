@@ -1,3 +1,4 @@
+// Configuration de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
   authDomain: "gestion-des-qrcodes.firebaseapp.com",
@@ -12,30 +13,30 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 function showAlert(message, type) {
-    const alertContainer = document.getElementById('alert-container');
-    const alert = document.createElement('div');
-    alert.className = `alert alert-${type}`;
-    alert.textContent = message;
-    alertContainer.appendChild(alert);
+  const alertContainer = document.getElementById('alert-container');
+  const alert = document.createElement('div');
+  alert.className = `alert alert-${type}`;
+  alert.textContent = message;
+  alertContainer.appendChild(alert);
 
-    setTimeout(() => {
-        alert.classList.add('show');
-    }, 100);
+  setTimeout(() => {
+    alert.classList.add('show');
+  }, 100);
 
+  setTimeout(() => {
+    alert.classList.remove('show');
     setTimeout(() => {
-        alert.classList.remove('show');
-        setTimeout(() => {
-            alertContainer.removeChild(alert);
-        }, 300);
-    }, 3000);
+      alertContainer.removeChild(alert);
+    }, 300);
+  }, 3000);
 }
 
 function showSuccessAlert(message) {
-    showAlert(message, 'success');
+  showAlert(message, 'success');
 }
 
 function showErrorAlert(message) {
-    showAlert(message, 'danger');
+  showAlert(message, 'danger');
 }
 
 function generateQRCode() {
@@ -61,32 +62,39 @@ function generateQRCode() {
 
   const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
-  // Générer et afficher le QR code sans fond blanc
-  const canvas = document.getElementById('qrCanvas');
-  const ctx = canvas.getContext('2d');
-  const canvasSize = 300;
-  canvas.width = canvasSize;
-  canvas.height = canvasSize;
-
-  // Création du QR code avec fond transparent
-  const qr = new QRious({
-    element: canvas,
-    value: qrData,
-    size: canvasSize,
-    background: null,    // Supprime le fond blanc du QR code
-    backgroundAlpha: 0   // Assure que l'arrière-plan est transparent
+  // Configuration de QRCodeStyling
+  const qrCode = new QRCodeStyling({
+    width: 300,
+    height: 300,
+    data: qrData,
+    dotsOptions: {
+      color: "#000000",
+      type: "rounded" // Remplace les carrés par des points arrondis
+    },
+    backgroundOptions: {
+      color: "transparent" // Fond transparent
+    },
+    imageOptions: {
+      crossOrigin: "anonymous",
+      margin: 10
+    }
   });
 
-  // Charger le logo et l'ajouter par-dessus le QR code
+  // Charger le logo et l'ajouter comme arrière-plan
   const logo = new Image();
   logo.crossOrigin = "anonymous";
   logo.src = 'logo.png';
   logo.onload = function () {
-    const logoSize = canvasSize * 1.5;
-    const x = (canvas.width / 2) - (logoSize / 2);
-    const y = (canvas.height / 2) - (logoSize / 2);
+    qrCode.update({
+      image: logo.src,
+      imageOptions: {
+        hideBackgroundDots: true,  // Cache les points sous le logo
+        imageSize: 0.4,           // Ajuste la taille du logo par rapport au QR Code
+        margin: 8
+      }
+    });
 
-    ctx.drawImage(logo, x, y, logoSize, logoSize);
+    qrCode.append(document.getElementById("qrCanvasContainer"));
 
     document.getElementById('loading-spinner').style.display = 'none';
     document.querySelector('.qr_code').style.display = 'block';
@@ -117,35 +125,25 @@ function generateQRCode() {
     });
 }
 
-
-
 function downloadQRCode() {
-  const canvas = document.getElementById('qrCanvas');
-  if (!canvas) {
-    showErrorAlert('Erreur : Canvas non trouvé !');
+  const qrCodeContainer = document.getElementById('qrCanvasContainer');
+  if (!qrCodeContainer) {
+    showErrorAlert('Erreur : QR Code non trouvé !');
     return;
   }
 
-  try {
-    const link = document.createElement('a');
-    link.href = canvas.toDataURL('image/png');
-    link.download = 'qrcode.png';
-    link.click();
-    showSuccessAlert('QR Code téléchargé avec succès !');
-  } catch (error) {
-    console.error('Error creating download link:', error);
-    showErrorAlert("Une erreur s'est produite lors du téléchargement. Veuillez réessayer.");
-  }
+  qrCode.download({ name: "qrcode", extension: "png" });
+  showSuccessAlert('QR Code téléchargé avec succès !');
 }
 
 function shareQRCode() {
-  const canvas = document.getElementById('qrCanvas');
-  if (!canvas) {
-    showErrorAlert('Erreur : Canvas non trouvé !');
+  const qrCodeContainer = document.getElementById('qrCanvasContainer');
+  if (!qrCodeContainer) {
+    showErrorAlert('Erreur : QR Code non trouvé !');
     return;
   }
 
-  canvas.toBlob(function (blob) {
+  qrCodeContainer.toBlob(function (blob) {
     const file = new File([blob], "qrcode.png", { type: "image/png" });
     const shareData = {
       files: [file],
