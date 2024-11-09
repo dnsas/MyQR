@@ -71,25 +71,22 @@ function generateQRCode() {
       console.log("Document written with ID: ", docRef.id);
 
       const canvas = document.getElementById('qrCanvas');
-      const qr = new QRious({
-        element: canvas,
-        value: qrData,
-        size: 300,
-      });
+      const ctx = canvas.getContext('2d');
 
+      // Charger l'image du logo en arrière-plan
       const logo = new Image();
       logo.crossOrigin = "anonymous";
       logo.src = 'logo.png';
       logo.onload = function () {
-        const ctx = canvas.getContext('2d');
+        // Dessiner le logo pour couvrir tout le canvas
+        ctx.drawImage(logo, 0, 0, canvas.width, canvas.height);
 
-        // Taille du logo au premier plan
-        const logoSize = 60;  // Ajuster cette taille si nécessaire
-        const x = (canvas.width / 2) - (logoSize / 2);
-        const y = (canvas.height / 2) - (logoSize / 2);
-
-        // Dessiner le logo par-dessus le QR Code
-        ctx.drawImage(logo, x, y, logoSize, logoSize);
+        // Dessiner le QR Code par-dessus le logo
+        const qr = new QRious({
+          element: canvas,
+          value: qrData,
+          size: 300,  // Taille du QR Code (généralement ajustée au `canvas`)
+        });
 
         document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
