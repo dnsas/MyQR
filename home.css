@@ -268,7 +268,6 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
 
 @media screen and (max-width: 768px) {
     section.navigation  {
-        margin-bottom: 30px;
     }
     .navbar {
         height: 10%;
@@ -289,7 +288,6 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
 
     section.form {
         width: 90%;
-        padding: 20px;
     }
 
     .qr_code {
