@@ -82,7 +82,7 @@ function generateQRCode() {
   logo.crossOrigin = "anonymous";
   logo.src = 'logo.png';
   logo.onload = function () {
-    const logoSize = canvasSize * 0.8;
+    const logoSize = canvasSize * 1;
     const x = (canvas.width / 2) - (logoSize / 2);
     const y = (canvas.height / 2) - (logoSize / 2);
 
