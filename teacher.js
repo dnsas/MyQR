@@ -142,17 +142,68 @@ function supprimerEleve(eleveId) {
         console.error("Utilisateur non authentifié");
         return;
     }
-    if (confirm("Êtes-vous sûr de vouloir supprimer cet élève ?")) {
-        showLoadingSpinner();
-        db.collection("eleves").doc(eleveId).delete().then(() => {
-            console.log("Élève supprimé avec succès");
-            afficherDonnees();
-        }).catch((error) => {
-            console.error("Erreur lors de la suppression de l'élève: ", error);
-            alert("Erreur lors de la suppression de l'élève.");
-            hideLoadingSpinner();
-        });
-    }
+
+    // Récupérer les informations de l'élève
+    db.collection("eleves").doc(eleveId).get().then((doc) => {
+        if (doc.exists) {
+            const eleveData = doc.data();
+            const nomComplet = `${eleveData.prenom} ${eleveData.nom}`;
+
+            // Mettre à jour le message de confirmation
+            const confirmationMessage = document.getElementById('confirmation-message');
+            confirmationMessage.textContent = `Êtes-vous sûr de vouloir supprimer l'élève ${nomComplet} ?`;
+
+            // Afficher la boîte de dialogue
+            const confirmationDialog = document.getElementById('confirmation-dialog');
+            confirmationDialog.style.display = 'flex';
+
+            // Gérer le clic sur le bouton "Supprimer"
+            document.getElementById('confirm-yes').onclick = function() {
+                showLoadingSpinner();
+                db.collection("eleves").doc(eleveId).delete().then(() => {
+                    console.log("Élève supprimé avec succès");
+                    showSuccessAlert(`L'élève ${nomComplet} a été supprimé avec succès.`);
+                    afficherDonnees();
+                    confirmationDialog.style.display = 'none'; // Fermer la boîte de dialogue
+                }).catch((error) => {
+                    console.error("Erreur lors de la suppression de l'élève:", error);
+                    showErrorAlert(`Erreur lors de la suppression de l'élève ${nomComplet}.`);
+                    hideLoadingSpinner();
+                    confirmationDialog.style.display = 'none'; // Fermer la boîte de dialogue
+                });
+            };
+
+            // Gérer le clic sur le bouton "Annuler"
+            document.getElementById('confirm-no').onclick = function() {
+                confirmationDialog.style.display = 'none'; // Fermer la boîte de dialogue
+            };
+        } else {
+            console.error("Aucun élève trouvé avec cet ID");
+            showErrorAlert("Erreur : Élève non trouvé.");
+        }
+    }).catch((error) => {
+        console.error("Erreur lors de la récupération des données de l'élève:", error);
+        showErrorAlert("Erreur lors de la récupération des données de l'élève.");
+    });
+}
+
+function showAlert(message, type) {
+    const alertContainer = document.getElementById('alert-container');
+    const alert = document.createElement('div');
+    alert.className = `alert alert-${type}`;
+    alert.textContent = message;
+    alertContainer.appendChild(alert);
+
+    setTimeout(() => {
+        alert.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+        alert.classList.remove('show');
+        setTimeout(() => {
+            alertContainer.removeChild(alert);
+        }, 300);
+    }, 3000);
 }
 
 function voirQRCode(nom, prenom, classe, dateCreation, eleveId) {
