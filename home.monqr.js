@@ -118,6 +118,7 @@ function generateQRCode() {
 }
 
 
+
 function downloadQRCode() {
   const canvas = document.getElementById('qrCanvas');
   if (!canvas) {
