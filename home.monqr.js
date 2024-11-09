@@ -81,29 +81,18 @@ function generateQRCode() {
         element: canvas,
         value: qrData,
         size: canvasSize,
-        backgroundAlpha: 0, // Fond transparent pour le QR Code
       });
-
-      // Appliquer un flou à l'arrière-plan
-      ctx.filter = 'blur(5px)';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'; // Couleur blanche semi-transparente
-      ctx.fillRect(0, 0, canvasSize, canvasSize);
-      ctx.filter = 'none'; // Réinitialiser le filtre
 
       // Charger le logo
       const logo = new Image();
       logo.crossOrigin = "anonymous";
       logo.src = 'logo.png';
       logo.onload = function () {
-        // Dessiner le logo avec un flou appliqué
-        const logoSize = canvasSize * 0.5; // Taille du logo (50% de la taille du canvas)
+        const logoSize = canvasSize * 0.8; // Taille du logo (50% de la taille du canvas)
         const x = (canvas.width / 2) - (logoSize / 2);
         const y = (canvas.height / 2) - (logoSize / 2);
 
-        // Appliquer un flou au logo avant de le dessiner
-        ctx.filter = 'blur(10px)'; // Appliquer un flou au logo
         ctx.drawImage(logo, x, y, logoSize, logoSize);
-        ctx.filter = 'none'; // Réinitialiser le filtre
 
         document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
