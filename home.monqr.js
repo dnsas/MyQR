@@ -95,11 +95,15 @@ function generateQRCode() {
       logo.crossOrigin = "anonymous";
       logo.src = 'logo.png';
       logo.onload = function () {
-        // Dessiner le logo au premier plan
-        const logoSize = canvasSize * 1; // Taille du logo (20% de la taille du canvas)
+        // Dessiner le logo avec un flou appliqué
+        const logoSize = canvasSize * 0.5; // Taille du logo (50% de la taille du canvas)
         const x = (canvas.width / 2) - (logoSize / 2);
         const y = (canvas.height / 2) - (logoSize / 2);
+
+        // Appliquer un flou au logo avant de le dessiner
+        ctx.filter = 'blur(10px)'; // Appliquer un flou au logo
         ctx.drawImage(logo, x, y, logoSize, logoSize);
+        ctx.filter = 'none'; // Réinitialiser le filtre
 
         document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
