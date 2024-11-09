@@ -86,6 +86,7 @@ section h1 {
 }
 
 section.navigation {
+    margin-bottom: 50px;
 }
 
 .navbar {
@@ -102,7 +103,7 @@ section.navigation {
     border-radius: 60px;
     padding: 10px 20px;
     width: 60%;
-    height: 10%;
+    height: 15%;
     max-width: 600px;
 }
 
@@ -143,25 +144,23 @@ div.scan button, div.teacher button, div.home button{
 
 
 div.scan img,div.teacher img{
-    width: 50px;
+    width: 65px;
     height: auto;
-    filter: grayscale(100%);
     background-color: white;
     border-radius: 50%;
     transition: 1s;
 }
 
 div.home img {
-    width: 65px;
+    width: 80px;
     height: auto;
-    filter: grayscale(100%);
     background-color: white;
     border-radius: 50%;
     transition: 1s;
 }
 
 div.scan img:hover, div.teacher img:hover, div.home img:hover {
-    filter: invert(1);
+    filter: invert(90%) hue-rotate(183deg) brightness(70%) contrast(85%) drop-shadow(0 0 3px red);
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -261,10 +260,19 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     opacity: 1;
 }
 
+@media screen and (max-width: 1069px) {
+    section.navigation {
+        margin-bottom: 50px;
+    }
+}
+
 @media screen and (max-width: 768px) {
+    section.navigation  {
+        margin-bottom: 30px;
+    }
     .navbar {
+        height: 10%;
         padding: 10px;
-        top: 10px;
     }
 
     .nav-item {
@@ -272,7 +280,11 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     }
 
     div.scan img, div.teacher img {
-        width: 40px;
+        width: 50px;
+    }
+    
+    div.home img{
+        width: 60px;
     }
 
     section.form {
