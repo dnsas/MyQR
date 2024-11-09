@@ -76,48 +76,23 @@ function generateQRCode() {
       canvas.width = size;
       canvas.height = size;
 
-      // Créer un dégradé de fond
-      const gradient = ctx.createLinearGradient(0, 0, size, size);
-      gradient.addColorStop(0, '#0099ff');
-      gradient.addColorStop(1, '#6600ff');
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, size, size);
-
-      // Générer le QR code
-      const qr = new QRious({
-        element: canvas,
-        value: qrData,
-        size: size * 0.7, // QR code plus petit pour laisser de la place au logo
-        backgroundAlpha: 0 // Fond transparent pour le QR code
-      });
-
-      // Ajouter un effet de points au QR code
-      const imageData = ctx.getImageData(0, 0, size, size);
-      const data = imageData.data;
-      const dotSize = 8;
-
-      // Dessiner les points du QR code
-      for (let y = 0; y < size; y += dotSize) {
-        for (let x = 0; x < size; x += dotSize) {
-          const i = (y * size + x) * 4;
-          if (data[i] === 0) { // Si le pixel est noir
-            ctx.beginPath();
-            ctx.arc(x + dotSize / 2, y + dotSize / 2, dotSize / 2 - 1, 0, Math.PI * 2);
-            ctx.fillStyle = 'white'; // Couleur des points
-            ctx.fill();
-          }
-        }
-      }
-
-      // Ajouter le logo par-dessus le QR code
+      // Charger le logo en arrière-plan
       const logo = new Image();
       logo.crossOrigin = "anonymous";
-      logo.src = 'logo.png';
+      logo.src = 'logo.png'; // Assurez-vous que le logo est accessible via ce chemin
       logo.onload = function () {
-        const logoSize = size * 0.2; // Taille du logo
-        const logoX = (size - logoSize) / 2; // Centrer le logo
-        const logoY = (size - logoSize) / 2;
-        ctx.drawImage(logo, logoX, logoY, logoSize, logoSize); // Dessiner le logo
+        // Dessiner le logo en plein écran (arrière-plan du QR code)
+        ctx.drawImage(logo, 0, 0, size, size);
+
+        // Générer le QR code par-dessus avec un fond transparent
+        const qr = new QRious({
+          element: canvas,
+          value: qrData,
+          size: size * 0.8,
+          backgroundAlpha: 0, // Fond transparent pour voir le logo en arrière-plan
+          foreground: 'black', // Noir pour le QR code
+          level: 'H' // Haute correction d'erreur
+        });
 
         document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
@@ -141,6 +116,8 @@ function generateQRCode() {
       showErrorAlert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
     });
 }
+
+
 
 function downloadQRCode() {
   const canvas = document.getElementById('qrCanvas');
