@@ -59,7 +59,7 @@ function generateQRCode() {
     second: '2-digit',
   });
 
-  const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date: ${date}`;
+  const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
   db.collection("eleves").add({
     nom: nom,
@@ -68,55 +68,42 @@ function generateQRCode() {
     dateCreation: date
   })
     .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document écrit avec ID: ", docRef.id);
 
-      const canvas = document.getElementById('qrCanvas');
-      const ctx = canvas.getContext('2d');
-      const size = 400;
-      canvas.width = size;
-      canvas.height = size;
+      // Création du QR code coloré avec des points arrondis
+      const qrCode = new QRCodeStyling({
+        width: 300,
+        height: 300,
+        data: qrData,
+        image: 'logo.png', // URL du logo
+        dotsOptions: {
+          color: "#3498db", // Couleur des points
+          type: "rounded",  // Forme des points arrondie
+        },
+        backgroundOptions: {
+          color: "#ffffff" // Couleur de fond
+        },
+        imageOptions: {
+          crossOrigin: "anonymous",
+          margin: 5
+        }
+      });
 
-      // Charger le logo en arrière-plan
-      const logo = new Image();
-      logo.crossOrigin = "anonymous";
-      logo.src = 'logo.png'; // Assurez-vous que le logo est accessible via ce chemin
-      logo.onload = function () {
-        // Dessiner le logo en plein écran (arrière-plan du QR code)
-        ctx.drawImage(logo, 0, 0, size, size);
+      // Affichage du QR code sur le canvas
+      qrCode.append(document.getElementById("qrCanvas"));
 
-        // Générer le QR code par-dessus avec un fond transparent
-        const qr = new QRious({
-          element: canvas,
-          value: qrData,
-          size: size * 0.8,
-          backgroundAlpha: 0, // Fond transparent pour voir le logo en arrière-plan
-          foreground: 'black', // Noir pour le QR code
-          level: 'H' // Haute correction d'erreur
-        });
-
-        document.getElementById('loading-spinner').style.display = 'none';
-        document.querySelector('.qr_code').style.display = 'block';
-        document.getElementById('downloadBtn').style.display = 'block';
-        document.getElementById('shareBtn').style.display = 'block';
-        showSuccessAlert("QR Code généré avec succès !");
-      };
-
-      logo.onerror = function () {
-        console.error("Erreur de chargement du logo");
-        document.getElementById('loading-spinner').style.display = 'none';
-        document.querySelector('.qr_code').style.display = 'block';
-        document.getElementById('downloadBtn').style.display = 'block';
-        document.getElementById('shareBtn').style.display = 'block';
-        showErrorAlert("Erreur de chargement du logo, mais le QR Code a été généré.");
-      };
+      document.getElementById('loading-spinner').style.display = 'none';
+      document.querySelector('.qr_code').style.display = 'block';
+      document.getElementById('downloadBtn').style.display = 'block';
+      document.getElementById('shareBtn').style.display = 'block';
+      showSuccessAlert("QR Code généré avec succès !");
     })
     .catch((error) => {
-      console.error("Error adding document: ", error);
+      console.error("Erreur lors de l'ajout du document : ", error);
       document.getElementById('loading-spinner').style.display = 'none';
       showErrorAlert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
     });
 }
-
 
 
 function downloadQRCode() {
