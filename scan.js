@@ -31,7 +31,16 @@ function displayQRData(content) {
     title.textContent = 'Données scannées';
 
     const data = document.createElement('p');
-    data.textContent = content;
+    
+    if (content.startsWith('https://')) {
+        const link = document.createElement('a');
+        link.href = content;
+        link.textContent = content;
+        link.target = '_blank'; // Ouvre le lien dans un nouvel onglet
+        data.appendChild(link);
+    } else {
+        data.textContent = content;
+    }
 
     qrDataCard.appendChild(title);
     qrDataCard.appendChild(data);
@@ -39,7 +48,6 @@ function displayQRData(content) {
     qrDataList.innerHTML = '';
     qrDataList.appendChild(qrDataCard);
 }
-
 rescanButton.addEventListener('click', function () {
     resultDiv.style.display = 'none';
     qrDataList.innerHTML = '';
