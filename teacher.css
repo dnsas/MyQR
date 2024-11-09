@@ -191,7 +191,7 @@ div.retour img {
 }
 
 div.retour img:hover {
-    filter: invert(1);
+    filter: drop-shadow(0 0 3px red) contrast(0.8);
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 

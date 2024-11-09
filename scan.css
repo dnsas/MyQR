@@ -143,14 +143,13 @@ div.retour button {
 div.retour img {
     width: 2.5rem;
     height: 2.5rem;
-    filter: grayscale(100%);
     background-color: white;
     border-radius: 50%;
     transition: all 0.3s ease;
 }
 
 div.retour img:hover {
-    filter: invert(1);
+    filter: drop-shadow(0 0 3px red) contrast(0.8);
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -243,82 +242,5 @@ div.retour img:hover {
 }
 
 
-section.navigation {
-    padding: 20px;
-}
-
-.navbar {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-radius: 30px;
-    padding: 10px 20px;
-    width: 90%;
-    max-width: 600px;
-}
-
-.nav-item, .navbar-brand {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nav-link{
-    color: white;
-    text-decoration: none;
-    margin-bottom: 5px;
-    transition: color 0.3s;
-}
-
-.nav-link:hover {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.navbar-brand {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-div.scan, div.teacher, div.home  {
-    margin-top: 5px;
-}
-
-div.scan button, div.teacher button, div.home button{
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-}
 
 
-
-div.scan img,div.teacher img{
-    width: 50px;
-    height: auto;
-    filter: grayscale(100%);
-    background-color: white;
-    border-radius: 50%;
-    transition: 1s;
-}
-
-div.home img {
-    width: 65px;
-    height: auto;
-    filter: grayscale(100%);
-    background-color: white;
-    border-radius: 50%;
-    transition: 1s;
-}
-
-div.scan img:hover, div.teacher img:hover, div.home img:hover {
-    filter: invert(1);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-}
