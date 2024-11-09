@@ -87,8 +87,8 @@ function generateQRCode() {
       const qr = new QRious({
         element: canvas,
         value: qrData,
-        size: size,
-        backgroundAlpha: 0
+        size: size * 0.7, // QR code plus petit pour laisser de la place au logo
+        backgroundAlpha: 0 // Fond transparent pour le QR code
       });
 
       // Ajouter un effet de points au QR code
@@ -96,27 +96,28 @@ function generateQRCode() {
       const data = imageData.data;
       const dotSize = 8;
 
+      // Dessiner les points du QR code
       for (let y = 0; y < size; y += dotSize) {
         for (let x = 0; x < size; x += dotSize) {
           const i = (y * size + x) * 4;
-          if (data[i] === 0) {  // Si le pixel est noir
+          if (data[i] === 0) { // Si le pixel est noir
             ctx.beginPath();
-            ctx.arc(x + dotSize / 2, y + dotSize / 2, dotSize / 2 - 1, 0, 2 * Math.PI);
-            ctx.fillStyle = 'white';
+            ctx.arc(x + dotSize / 2, y + dotSize / 2, dotSize / 2 - 1, 0, Math.PI * 2);
+            ctx.fillStyle = 'white'; // Couleur des points
             ctx.fill();
           }
         }
       }
 
-      // Ajouter le logo
+      // Ajouter le logo par-dessus le QR code
       const logo = new Image();
       logo.crossOrigin = "anonymous";
       logo.src = 'logo.png';
       logo.onload = function () {
-        const logoSize = size * 0.2;
-        const logoX = (size - logoSize) / 2;
+        const logoSize = size * 0.2; // Taille du logo
+        const logoX = (size - logoSize) / 2; // Centrer le logo
         const logoY = (size - logoSize) / 2;
-        ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+        ctx.drawImage(logo, logoX, logoY, logoSize, logoSize); // Dessiner le logo
 
         document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
