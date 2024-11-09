@@ -264,6 +264,14 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     section.navigation {
         margin-bottom: 20px;
     }
+    
+    section.form {
+        padding: 20px;
+    }
+
+    section.content {
+        padding-top: 30px; /* Ajuste pour les petits écrans */
+    }
 
     .navbar {
         width: 70%;
@@ -283,17 +291,12 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
         width: 95px;
     }
 
-    section.form {
-        width: 90%;
-    }
+
 
     .qr_code {
         width: 100%;
     }
     
-    section.content {
-        padding-top: 60px; /* Ajuste pour les petits écrans */
-    }
 }
 
 @media screen and (max-width: 780px) {
