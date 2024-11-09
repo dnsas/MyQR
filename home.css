@@ -269,6 +269,7 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     section.navigation  {
     }
     .navbar {
+        width: 90%;
         height: 10%;
         padding: 10px;
     }
