@@ -28,6 +28,7 @@ section.form {
     border-radius: 20px;
     border: 2px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);
+    max-width: 100%; /* Assurer que le formulaire ne dépasse pas l'écran */
 }
 
 section h1 {
@@ -103,8 +104,8 @@ section.navigation {
     border-radius: 60px;
     padding: 10px 20px;
     width: 60%;
-    height: 15%;
     max-width: 600px;
+    height: auto; /* Hauteur automatique pour une meilleure flexibilité */
 }
 
 .nav-item {
@@ -113,7 +114,7 @@ section.navigation {
     align-items: center;
 }
 
-.nav-link{
+.nav-link {
     color: white;
     text-decoration: none;
     margin-bottom: 5px;
@@ -130,20 +131,18 @@ section.navigation {
     font-weight: bold;
 }
 
-div.scan, div.teacher, div.home  {
+div.scan, div.teacher, div.home {
     margin-top: 5px;
 }
 
-div.scan button, div.teacher button, div.home button{
+div.scan button, div.teacher button, div.home button {
     background-color: transparent;
     border: none;
     cursor: pointer;
     padding: 5px;
 }
 
-
-
-div.scan img,div.teacher img{
+div.scan img, div.teacher img {
     width: 65px;
     height: auto;
     background-color: white;
@@ -172,6 +171,7 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     padding: 15px;
     border-radius: 20px;
     background-color: white;
+    max-width: 100%; /* Assurer que le QR code ne dépasse pas */
 }
 
 .qr_code canvas {
@@ -263,14 +263,10 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     section.navigation {
         margin-bottom: 50px;
     }
-}
 
-@media screen and (max-width: 768px) {
-    section.navigation  {
-    }
     .navbar {
         width: 90%;
-        height: 10%;
+        height: auto;
         padding: 10px;
     }
 
@@ -281,8 +277,8 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     div.scan img, div.teacher img {
         width: 50px;
     }
-    
-    div.home img{
+
+    div.home img {
         width: 60px;
     }
 
@@ -292,5 +288,33 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
 
     .qr_code {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    section.form {
+        padding: 20px;
+    }
+
+    .navbar {
+        width: 100%;
+        height: auto;
+        padding: 10px 5px;
+    }
+
+    .nav-item {
+        margin: 5px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+    }
+
+    div.scan img, div.teacher img {
+        width: 40px;
+    }
+
+    div.home img {
+        width: 50px;
     }
 }
