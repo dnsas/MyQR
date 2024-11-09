@@ -260,45 +260,6 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     opacity: 1;
 }
 
-@media screen and (max-width: 1069px) {
-    section.navigation {
-        margin-bottom: 20px;
-    }
-    
-    section.form {
-        padding: 20px;
-    }
-
-    section.content {
-        padding-top: 30px; /* Ajuste pour les petits écrans */
-    }
-
-    .navbar {
-        width: 70%;
-        height: auto;
-        padding: 10px;
-    }
-
-    .nav-item {
-        margin: 5px 0;
-    }
-
-    div.scan img, div.teacher img {
-        width: 75px;
-    }
-
-    div.home img {
-        width: 95px;
-    }
-
-
-
-    .qr_code {
-        width: 100%;
-    }
-    
-}
-
 @media screen and (max-width: 780px) {
 
     section.navigation {
