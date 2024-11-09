@@ -1,110 +1,109 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+<script type="module">
+    // Importation des fonctions nécessaires de Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
-            authDomain: "gestion-des-qrcodes.firebaseapp.com",
-            projectId: "gestion-des-qrcodes",
-            storageBucket: "gestion-des-qrcodes.firebasestorage.app",
-            messagingSenderId: "118022748151",
-            appId: "1:118022748151:web:5a1df3c3eb636bf16b60f2",
-            measurementId: "G-9YMVMQJSRN"
-        };
+    // Configuration de Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
+        authDomain: "gestion-des-qrcodes.firebaseapp.com",
+        projectId: "gestion-des-qrcodes",
+        storageBucket: "gestion-des-qrcodes.firebasestorage.app",
+        messagingSenderId: "118022748151",
+        appId: "1:118022748151:web:5a1df3c3eb636bf16b60f2",
+        measurementId: "G-9YMVMQJSRN"
+    };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const db = getFirestore(app);
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page d'accueil</title>
-    <link rel="stylesheet" href="home.css">
-    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling/lib/index.min.js"></script>
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-    <script src="https://kit.fontawesome.com/f79850fb33.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.1/qrious.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="home.monqr.js" defer></script>
+    // Initialisation de Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+</script>
+
+<!-- Importation des bibliothèques -->
+<script src="https://cdn.jsdelivr.net/npm/qr-code-styling/lib/index.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+<script src="https://kit.fontawesome.com/f79850fb33.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.1/qrious.min.js"></script>
+<script type="module" src="home.monqr.js"></script>
+
+<link rel="stylesheet" href="home.css">
 </head>
 
 <body>
-    <section class="navigation">
-        <nav class="navbar">
-            <div class="nav-item">
-                <div class="teacher">
-                    <a href="https://dnsas.github.io/MyQR/teacher.html">
-                        <button>
-                            <img src="teacher.png" alt="Mes élèves">
-                        </button>
-                    </a>
-                </div>
-            </div>
-            <div class="navbar-brand">
-                <div class="home">
-                    <a href="https://dnsas.github.io/MyQR/home.html">
-                        <button>
-                            <img src="home.png" alt="Accueil">
-                        </button>
-                    </a>
-                </div>
-            </div>
-            <div class="nav-item">
-                <div class="scan">
-                    <a href="https://dnsas.github.io/MyQR/scan.html">
-                        <button>
-                            <img src="scans.png" alt="Scanner QR Code">
-                        </button>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </section>
-    <section class="content">
-        <div id="alert-container" class="alert-container"></div>
-        <section class="form">
-            <h1>Générer mon QRCode</h1>
-            <div class="input-box">
-                <input type="text" placeholder="Nom" class="nom">
-                <i class="fa-solid fa-arrow-down-z-a"></i>
-            </div>
-            <div class="input-box">
-                <input type="text" placeholder="Prenom" class="prenom">
-                <i class="fa-solid fa-signature"></i>
-            </div>
-            <div class="input-box">
-                <input type="text" placeholder="Ma Classe" class="classe">
-                <i class="fa-solid fa-users"></i>
-            </div>
-
-            <button class="send-btn" onclick="generateQRCode()">Envoyer</button>
-
-            <div id="current_date"></div>
-            <div class="qr_code" style="display:none;">
-                <canvas id="qrCanvas"></canvas>
-                <div class="button-container">
-                    <button id="downloadBtn" style="display:none;" onclick="downloadQRCode()">
-                        <i class="fa-solid fa-download"></i>
+<section class="navigation">
+    <nav class="navbar">
+        <div class="nav-item">
+            <div class="teacher">
+                <a href="https://dnsas.github.io/MyQR/teacher.html">
+                    <button>
+                        <img src="teacher.png" alt="Mes élèves">
                     </button>
-                    <button id="shareBtn" style="display:none;" onclick="shareQRCode()">
-                        <i class="fa-solid fa-share-nodes"></i>
-                    </button>
-                </div>
+                </a>
             </div>
-        </section>
-        <div id="loading-spinner" style="display: none;">
-            <div class="spinner"></div>
+        </div>
+        <div class="navbar-brand">
+            <div class="home">
+                <a href="https://dnsas.github.io/MyQR/home.html">
+                    <button>
+                        <img src="home.png" alt="Accueil">
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="nav-item">
+            <div class="scan">
+                <a href="https://dnsas.github.io/MyQR/scan.html">
+                    <button>
+                        <img src="scans.png" alt="Scanner QR Code">
+                    </button>
+                </a>
+            </div>
+        </div>
+    </nav>
+</section>
+
+<section class="content">
+    <div id="alert-container" class="alert-container"></div>
+
+    <section class="form">
+        <h1>Générer mon QRCode</h1>
+        <div class="input-box">
+            <input type="text" placeholder="Nom" class="nom">
+            <i class="fa-solid fa-arrow-down-z-a"></i>
+        </div>
+        <div class="input-box">
+            <input type="text" placeholder="Prenom" class="prenom">
+            <i class="fa-solid fa-signature"></i>
+        </div>
+        <div class="input-box">
+            <input type="text" placeholder="Ma Classe" class="classe">
+            <i class="fa-solid fa-users"></i>
+        </div>
+
+        <button class="send-btn" onclick="generateQRCode()">Envoyer</button>
+
+        <div id="current_date"></div>
+
+        <div class="qr_code" style="display:none;">
+            <canvas id="qrCanvas"></canvas>
+            <div class="button-container">
+                <button id="downloadBtn" style="display:none;" onclick="downloadQRCode()">
+                    <i class="fa-solid fa-download"></i>
+                </button>
+                <button id="shareBtn" style="display:none;" onclick="shareQRCode()">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+            </div>
         </div>
     </section>
+
+    <div id="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+</section>
 </body>
 
 </html>
