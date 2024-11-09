@@ -61,51 +61,21 @@ function generateQRCode() {
 
   const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
-  // Générer le QR code avec QRious
-  const qr = new QRious({
-    value: qrData,
-    size: 300,
-    background: null,    // Supprimer le fond blanc du QR code
-    backgroundAlpha: 0   // Assurer que l'arrière-plan est transparent
-  });
-
-  // Récupérer l'image générée par QRious
-  const qrImage = qr.canvas;
-
-  // Création du canvas pour dessiner les cercles
+  // Générer et afficher le QR code sans fond blanc
   const canvas = document.getElementById('qrCanvas');
   const ctx = canvas.getContext('2d');
   const canvasSize = 300;
   canvas.width = canvasSize;
   canvas.height = canvasSize;
 
-  // Dessiner l'image du QR code sur le canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height); // Effacer le canvas
-  ctx.drawImage(qrImage, 0, 0);
-
-  // Ensuite, redessiner les modules sous forme de cercles (points)
-  const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const data = imgData.data;
-  const moduleSize = canvasSize / 21; // Taille approximative d'un module (QR code 21x21)
-
-  for (let y = 0; y < canvas.height; y += moduleSize) {
-    for (let x = 0; x < canvas.width; x += moduleSize) {
-      const index = (y * canvas.width + x) * 4;
-      const alpha = data[index + 3]; // Alpha (transparence)
-
-      if (alpha > 128) { // Si l'alpha est suffisant (pour détecter les modules noirs)
-        const centerX = x + moduleSize / 2;
-        const centerY = y + moduleSize / 2;
-        const radius = moduleSize / 3; // Taille du point (cercle)
-
-        // Dessiner un cercle
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#000'; // Couleur du point (noir)
-        ctx.fill();
-      }
-    }
-  }
+  // Création du QR code avec fond transparent
+  const qr = new QRious({
+    element: canvas,
+    value: qrData,
+    size: canvasSize,
+    background: null,    // Supprime le fond blanc du QR code
+    backgroundAlpha: 0   // Assure que l'arrière-plan est transparent
+  });
 
   // Charger le logo et l'ajouter par-dessus le QR code
   const logo = new Image();
@@ -146,8 +116,6 @@ function generateQRCode() {
       showErrorAlert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
     });
 }
-
-
 
 
 
