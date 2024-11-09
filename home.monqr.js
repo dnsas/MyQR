@@ -72,7 +72,7 @@ function generateQRCode() {
       type: "rounded" // Remplace les carrés par des points arrondis
     },
     backgroundOptions: {
-      color: "transparent" // Fond transparent
+      color: "transparent" // Assure un fond transparent
     },
     imageOptions: {
       crossOrigin: "anonymous",
@@ -80,20 +80,21 @@ function generateQRCode() {
     }
   });
 
-  // Charger le logo et l'ajouter comme arrière-plan
+  // Charger le logo et ajouter le QR Code au conteneur
   const logo = new Image();
   logo.crossOrigin = "anonymous";
-  logo.src = 'logo.png';
+  logo.src = 'logo.png';  // Assurez-vous que l'image est accessible à cette URL
   logo.onload = function () {
     qrCode.update({
       image: logo.src,
       imageOptions: {
         hideBackgroundDots: true,  // Cache les points sous le logo
-        imageSize: 0.4,           // Ajuste la taille du logo par rapport au QR Code
+        imageSize: 0.4,           // Ajuste la taille du logo
         margin: 8
       }
     });
 
+    // Afficher le QR code dans le conteneur
     qrCode.append(document.getElementById("qrCanvasContainer"));
 
     document.getElementById('loading-spinner').style.display = 'none';
@@ -109,7 +110,7 @@ function generateQRCode() {
     showErrorAlert("Erreur de chargement du logo, mais le QR Code a été généré.");
   };
 
-  // Ensuite, enregistrer les données dans la base
+  // Enregistrer les données dans Firestore
   db.collection("eleves").add({
     nom: nom,
     prenom: prenom,
@@ -117,10 +118,10 @@ function generateQRCode() {
     dateCreation: date
   })
     .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
+      console.log("Document écrit avec ID: ", docRef.id);
     })
     .catch((error) => {
-      console.error("Error adding document: ", error);
+      console.error("Erreur lors de l'ajout du document: ", error);
       showErrorAlert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
     });
 }
