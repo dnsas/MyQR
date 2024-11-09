@@ -61,42 +61,51 @@ function generateQRCode() {
 
   const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
-  // Générer le QR code sans afficher l'image sur le canvas
+  // Générer le QR code avec QRious
   const qr = new QRious({
     value: qrData,
     size: 300,
-    background: null,    // Supprime le fond blanc du QR code
-    backgroundAlpha: 0,  // Assure que l'arrière-plan est transparent
+    background: null,    // Supprimer le fond blanc du QR code
+    backgroundAlpha: 0   // Assurer que l'arrière-plan est transparent
   });
 
-  // Création du canvas
+  // Récupérer l'image générée par QRious
+  const qrImage = qr.canvas;
+
+  // Création du canvas pour dessiner les cercles
   const canvas = document.getElementById('qrCanvas');
   const ctx = canvas.getContext('2d');
   const canvasSize = 300;
   canvas.width = canvasSize;
   canvas.height = canvasSize;
 
-  // Redessiner le QR code avec des points (cercles)
-  const qrModules = qr._qr.modules; // Obtenir les modules du QR code
-  const moduleSize = canvasSize / qrModules.length;
-
+  // Dessiner l'image du QR code sur le canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Effacer le canvas
+  ctx.drawImage(qrImage, 0, 0);
 
-  qrModules.forEach((row, y) => {
-    row.forEach((module, x) => {
-      if (module) {
-        const centerX = x * moduleSize + moduleSize / 2;
-        const centerY = y * moduleSize + moduleSize / 2;
+  // Ensuite, redessiner les modules sous forme de cercles (points)
+  const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imgData.data;
+  const moduleSize = canvasSize / 21; // Taille approximative d'un module (QR code 21x21)
+
+  for (let y = 0; y < canvas.height; y += moduleSize) {
+    for (let x = 0; x < canvas.width; x += moduleSize) {
+      const index = (y * canvas.width + x) * 4;
+      const alpha = data[index + 3]; // Alpha (transparence)
+
+      if (alpha > 128) { // Si l'alpha est suffisant (pour détecter les modules noirs)
+        const centerX = x + moduleSize / 2;
+        const centerY = y + moduleSize / 2;
         const radius = moduleSize / 3; // Taille du point (cercle)
 
-        // Dessiner un cercle au lieu d'un carré
+        // Dessiner un cercle
         ctx.beginPath();
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
         ctx.fillStyle = '#000'; // Couleur du point (noir)
         ctx.fill();
       }
-    });
-  });
+    }
+  }
 
   // Charger le logo et l'ajouter par-dessus le QR code
   const logo = new Image();
@@ -137,6 +146,7 @@ function generateQRCode() {
       showErrorAlert("Erreur lors de la sauvegarde des données. Veuillez réessayer.");
     });
 }
+
 
 
 
