@@ -62,8 +62,11 @@ function generateQRCode() {
 
   const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
+  // Chemin du logo (mettre à `null` si vous ne voulez pas de logo)
+  const logoPath = 'logo.png'; // Remplacez par `null` pour pas de logo
+  
   // Configuration de QRCodeStyling
-  const qrCode = new QRCodeStyling({
+  const qrCodeConfig = {
     width: 300,
     height: 300,
     data: qrData,
@@ -78,37 +81,28 @@ function generateQRCode() {
       crossOrigin: "anonymous",
       margin: 10
     }
-  });
-
-  // Charger le logo et ajouter le QR Code au conteneur
-  const logo = new Image();
-  logo.crossOrigin = "anonymous";
-  logo.src = 'logo.png';  // Assurez-vous que l'image est accessible à cette URL
-  logo.onload = function () {
-    qrCode.update({
-      image: logo.src,
-      imageOptions: {
-        hideBackgroundDots: true,  // Cache les points sous le logo
-        imageSize: 0.4,           // Ajuste la taille du logo
-        margin: 8
-      }
-    });
-
-    // Afficher le QR code dans le conteneur
-    qrCode.append(document.getElementById("qrCanvasContainer"));
-
-    document.getElementById('loading-spinner').style.display = 'none';
-    document.querySelector('.qr_code').style.display = 'block';
-    document.getElementById('downloadBtn').style.display = 'block';
-    document.getElementById('shareBtn').style.display = 'block';
-    showSuccessAlert("QR Code généré avec succès !");
   };
 
-  logo.onerror = function () {
-    console.error("Erreur de chargement du logo");
-    document.getElementById('loading-spinner').style.display = 'none';
-    showErrorAlert("Erreur de chargement du logo, mais le QR Code a été généré.");
-  };
+  // Ajouter le logo seulement s'il est défini
+  if (logoPath) {
+    qrCodeConfig.image = logoPath;
+    qrCodeConfig.imageOptions = {
+      hideBackgroundDots: true,  // Cache les points sous le logo
+      imageSize: 0.4,           // Ajuste la taille du logo
+      margin: 8
+    };
+  }
+
+  const qrCode = new QRCodeStyling(qrCodeConfig);
+
+  // Afficher le QR code dans le conteneur
+  qrCode.append(document.getElementById("qrCanvasContainer"));
+
+  document.getElementById('loading-spinner').style.display = 'none';
+  document.querySelector('.qr_code').style.display = 'block';
+  document.getElementById('downloadBtn').style.display = 'block';
+  document.getElementById('shareBtn').style.display = 'block';
+  showSuccessAlert("QR Code généré avec succès !");
 
   // Enregistrer les données dans Firestore
   db.collection("eleves").add({
