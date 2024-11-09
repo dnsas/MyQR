@@ -38,28 +38,6 @@ function showErrorAlert(message) {
     showAlert(message, 'danger');
 }
 
-function createStylizedBackground(canvas, width, height) {
-    const ctx = canvas.getContext('2d');
-    
-    // Créer un dégradé pour le fond
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, '#0099ff');
-    gradient.addColorStop(1, '#6600ff');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-    
-    // Ajouter des formes géométriques
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-    for (let i = 0; i < 20; i++) {
-        const x = Math.random() * width;
-        const y = Math.random() * height;
-        const size = Math.random() * 50 + 10;
-        ctx.beginPath();
-        ctx.arc(x, y, size, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
-
 function generateQRCode() {
   const nom = encodeURIComponent(document.querySelector('.nom').value.trim());
   const prenom = encodeURIComponent(document.querySelector('.prenom').value.trim());
@@ -93,36 +71,40 @@ function generateQRCode() {
       console.log("Document written with ID: ", docRef.id);
 
       const canvas = document.getElementById('qrCanvas');
-      const ctx = canvas.getContext('2d');
-      const size = 500; // Augmentez la taille pour un meilleur rendu
-      canvas.width = size;
-      canvas.height = size;
-
-      // Créer le fond stylisé
-      createStylizedBackground(canvas, size, size);
-
-      // Générer le QR code
       const qr = new QRious({
         element: canvas,
         value: qrData,
-        size: size * 0.7, // Le QR code occupe 70% de la taille totale
-        backgroundAlpha: 0 // QR code transparent
+        size: 300,
+        backgroundAlpha: 0  // rendre le fond transparent pour superposer sur l'image
       });
 
-      // Centrer le QR code sur le canvas
-      const qrSize = size * 0.7;
-      const qrPosition = (size - qrSize) / 2;
-      ctx.drawImage(canvas, 0, 0, qrSize, qrSize, qrPosition, qrPosition, qrSize, qrSize);
-
-      // Ajouter le logo
       const logo = new Image();
       logo.crossOrigin = "anonymous";
       logo.src = 'logo.png';
       logo.onload = function () {
-        const logoSize = size * 0.2; // Le logo occupe 20% de la taille totale
-        const x = (size / 2) - (logoSize / 2);
-        const y = (size / 2) - (logoSize / 2);
-        ctx.drawImage(logo, x, y, logoSize, logoSize);
+        const ctx = canvas.getContext('2d');
+        
+        // Redimensionner et dessiner l'image de fond (logo)
+        ctx.drawImage(logo, 0, 0, canvas.width, canvas.height);
+
+        // Appliquer un effet de points sur le QR code
+        const qrImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const qrPixelData = qrImageData.data;
+        const dotSize = 6;  // Taille de chaque point circulaire
+
+        // Boucle sur chaque pixel pour transformer les carrés en points
+        for (let y = 0; y < canvas.height; y += dotSize) {
+          for (let x = 0; x < canvas.width; x += dotSize) {
+            // Vérifie si le pixel est noir
+            const pixelIndex = (y * canvas.width + x) * 4;
+            if (qrPixelData[pixelIndex] === 0) {  // Vérifie si le pixel est noir
+              ctx.beginPath();
+              ctx.arc(x + dotSize / 2, y + dotSize / 2, dotSize / 2, 0, 2 * Math.PI);
+              ctx.fillStyle = "black";
+              ctx.fill();
+            }
+          }
+        }
 
         document.getElementById('loading-spinner').style.display = 'none';
         document.querySelector('.qr_code').style.display = 'block';
