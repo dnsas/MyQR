@@ -23,6 +23,13 @@ function hideLoadingSpinner() {
     document.getElementById('loading-spinner').style.display = 'none';
 }
 
+function checkEnter(event) {
+    if (event.key === "Enter") {  // Vérifie si la touche pressée est "Entrée"
+        checkPassword();  // Appelle la fonction checkPassword
+    }
+}
+
+
 function checkPassword() {
     showLoadingSpinner();
     const passwordInput = document.getElementById('passwordInput');
