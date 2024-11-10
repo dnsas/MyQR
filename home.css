@@ -160,7 +160,7 @@ div.home img {
 }
 
 div.scan img:hover, div.teacher img:hover, div.home img:hover {
-    filter: invert(90%) hue-rotate(183deg) brightness(70%) contrast(85%) drop-shadow(0 0 3px red);
+    filter: invert(90%) hue-rotate(183deg) brightness(70%)  drop-shadow(0 0 3px red) contrast(0.8);
     border: 2px solid rgba(255, 255, 255, 0.2);
 }
 

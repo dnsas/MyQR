@@ -269,20 +269,28 @@ div.retour img:hover {
     display: block;
     width: 80%;
     margin: 10px auto;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 4px;
+    padding: 15px;
+    border-radius: 25px;
+    outline: none;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+
 }
 
 .login-container button {
-    background-color: #4CAF50;
+    margin-top: 50px;
+    background-color: #B10C1C;
+    padding: 15px;
+    border-radius: 25px;
     color: white;
     border: none;
     cursor: pointer;
+    transition: 0.5s;
 }
 
 .login-container button:hover {
-    background-color: #45a049;
+    transform: scale(1.1);
 }
 
 
@@ -490,4 +498,32 @@ div.retour img:hover {
     .dialog-content {
         width: 70%;
     }
+}
+
+
+div.retour {
+    position: fixed; 
+    top: 1rem; 
+    left: 1rem;
+    z-index: 1000; 
+}
+
+div.retour button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+div.retour img {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+div.retour img:hover {
+    filter: drop-shadow(0 0 3px red) contrast(0.8);
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
