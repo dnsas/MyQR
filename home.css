@@ -1,3 +1,5 @@
+/* Modifié !!!*/
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
@@ -17,8 +19,8 @@ section.content {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 76px); 
-    padding-top: 50px; 
+    min-height: calc(100vh - 76px); /* Ajusté pour tenir compte de la navbar */
+    padding-top: 50px; /* Espace pour la navbar */
 }
 
 section.form {
@@ -106,7 +108,8 @@ section.navigation {
     width: 80%;
     max-height: 10%;
     max-width: 600px;
-    height: auto; 
+    height: auto; /* Hauteur automatique pour une meilleure flexibilité */
+}
 
 .nav-item {
     display: flex;
@@ -172,7 +175,7 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     padding: 15px;
     border-radius: 20px;
     background-color: white;
-    max-width: 100%; 
+    max-width: 100%; /* Assurer que le QR code ne dépasse pas */
 }
 
 .qr_code canvas {
@@ -270,7 +273,7 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     }
 
     section.content {
-        padding-top: 30px; 
+        padding-top: 30px; /* Ajuste pour les petits écrans */
     }
 
     .navbar {
