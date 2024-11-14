@@ -36,7 +36,7 @@ function displayQRData(content) {
         const link = document.createElement('a');
         link.href = content;
         link.textContent = content;
-        link.target = '_blank'; // Ouvre le lien dans un nouvel onglet
+        link.target = '_blank';
         data.appendChild(link);
     } else {
         data.textContent = content;
@@ -63,7 +63,7 @@ rescanButton.addEventListener('click', function () {
         });
 });
 
-// Vérification de la compatibilité avec getUserMedia
+
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     showLoadingSpinner();
 
@@ -71,7 +71,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         .then(function(stream) {
             hideLoadingSpinner();
             showSuccessAlert("Accès à la caméra autorisé");
-            stream.getTracks().forEach(track => track.stop()); // Arrêter le flux immédiatement
+            stream.getTracks().forEach(track => track.stop()); 
             initializeScanner();
         })
         .catch(function(error) {
