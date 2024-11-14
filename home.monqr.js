@@ -61,20 +61,19 @@ function generateQRCode() {
 
   const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
 
-  // Générer et afficher le QR code sans fond blanc
+
   const canvas = document.getElementById('qrCanvas');
   const ctx = canvas.getContext('2d');
   const canvasSize = 300;
   canvas.width = canvasSize;
   canvas.height = canvasSize;
 
-  // Création du QR code avec fond transparent
   const qr = new QRious({
     element: canvas,
     value: qrData,
     size: canvasSize,
-    background: null,    // Supprime le fond blanc du QR code
-    backgroundAlpha: 0   // Assure que l'arrière-plan est transparent
+    background: null,    
+    backgroundAlpha: 0
   });
 
   // Charger le logo et l'ajouter par-dessus le QR code
