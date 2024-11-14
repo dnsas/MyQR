@@ -160,29 +160,28 @@ function supprimerEleve(eleveId) {
             const confirmationMessage = document.getElementById('confirmation-message');
             confirmationMessage.textContent = `Êtes-vous sûr de vouloir supprimer l'élève ${nomComplet} ?`;
 
-            // Afficher la boîte de dialogue
             const confirmationDialog = document.getElementById('confirmation-dialog');
             confirmationDialog.style.display = 'flex';
 
-            // Gérer le clic sur le bouton "Supprimer"
+
             document.getElementById('confirm-yes').onclick = function() {
                 showLoadingSpinner();
                 db.collection("eleves").doc(eleveId).delete().then(() => {
                     console.log("Élève supprimé avec succès");
                     showSuccessAlert(`L'élève ${nomComplet} a été supprimé avec succès.`);
                     afficherDonnees();
-                    confirmationDialog.style.display = 'none'; // Fermer la boîte de dialogue
+                    confirmationDialog.style.display = 'none';
                 }).catch((error) => {
                     console.error("Erreur lors de la suppression de l'élève:", error);
                     showErrorAlert(`Erreur lors de la suppression de l'élève ${nomComplet}.`);
                     hideLoadingSpinner();
-                    confirmationDialog.style.display = 'none'; // Fermer la boîte de dialogue
+                    confirmationDialog.style.display = 'none';
                 });
             };
 
-            // Gérer le clic sur le bouton "Annuler"
+
             document.getElementById('confirm-no').onclick = function() {
-                confirmationDialog.style.display = 'none'; // Fermer la boîte de dialogue
+                confirmationDialog.style.display = 'none'; 
             };
         } else {
             console.error("Aucun élève trouvé avec cet ID");
