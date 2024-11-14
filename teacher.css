@@ -227,17 +227,17 @@ div.retour img:hover {
     backdrop-filter: blur(10px);
 }
 
-/* Image prof.png en haut à gauche */
+
 .prof-image {
     position: fixed;
     top: 10px;
     left: 10px;
-    width: 25vw;  /* Utilisation de l'unité 'vw' pour être responsive */
+    width: 25vw;  
     height: auto;
     z-index: 1001;
 }
 
-/* Image teacherfond.png en haut à droite */
+
 .teacher-background {
     position: fixed;
     top: 10px;
@@ -248,10 +248,10 @@ div.retour img:hover {
 }
 
 .login-container {
-    background-color: rgba(0, 0, 0, 0.5); /* Assurez la lisibilité */
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 30px;
     width: 420px;
-    max-width: 90%;  /* Adaptation pour écrans plus petits */
+    max-width: 90%; 
     height: auto;
     border-radius: 20px;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -259,7 +259,7 @@ div.retour img:hover {
     color: white;
 }
 
-/* Autres éléments de la boîte d'authentification */
+
 .login-container h2 {
     font-size: 32px;
 }
