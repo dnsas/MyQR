@@ -17,8 +17,8 @@ section.content {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 76px); /* Ajusté pour tenir compte de la navbar */
-    padding-top: 50px; /* Espace pour la navbar */
+    min-height: calc(100vh - 76px); 
+    padding-top: 50px; 
 }
 
 section.form {
@@ -106,8 +106,7 @@ section.navigation {
     width: 80%;
     max-height: 10%;
     max-width: 600px;
-    height: auto; /* Hauteur automatique pour une meilleure flexibilité */
-}
+    height: auto; 
 
 .nav-item {
     display: flex;
@@ -173,7 +172,7 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     padding: 15px;
     border-radius: 20px;
     background-color: white;
-    max-width: 100%; /* Assurer que le QR code ne dépasse pas */
+    max-width: 100%; 
 }
 
 .qr_code canvas {
@@ -271,7 +270,7 @@ div.scan img:hover, div.teacher img:hover, div.home img:hover {
     }
 
     section.content {
-        padding-top: 30px; /* Ajuste pour les petits écrans */
+        padding-top: 30px; 
     }
 
     .navbar {
