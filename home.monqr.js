@@ -1,3 +1,5 @@
+/* Modifié !!!*/
+
 const firebaseConfig = {
   apiKey: "AIzaSyAzq0WiQRklgpSeqPqjnDZcISWGRtywwU4",
   authDomain: "gestion-des-qrcodes.firebaseapp.com",
@@ -161,7 +163,7 @@ function shareQRCode() {
           showErrorAlert("Erreur lors du partage du QR Code.");
         });
     } else {
-      showErrorAlert("Le partage    n'est pas pris en charge sur votre appareil ou navigateur.");
+      showErrorAlert("Le partage n'est pas pris en charge sur votre appareil ou navigateur.");
     }
   }, 'image/png');
 }
