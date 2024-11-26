@@ -278,7 +278,7 @@ div.retour img:hover {
 .login-container input,
 .login-container button {
     display: block;
-    width: 80%;
+    width: 60%;
     margin: 10px auto;
     padding: 15px;
     border-radius: 25px;
@@ -310,28 +310,60 @@ div.retour img:hover {
 }
 
 .password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 80%;
-    margin: 10px auto;
+    position: relative; /* Nécessaire pour positionner l'icône avec `absolute` */
 }
 
 .password-container input {
-    padding-right: 60px; /* Espace pour l'icône */
+    width: 80%; /* S'assure que l'input prend toute la largeur disponible */
+    padding-right: 5vw; /* Utilisation d'une unité relative pour la marge droite */
+    padding: 12px 5vw; /* Ajuste également le padding vertical */
+    font-size: 1rem; /* Taille du texte ajustable */
+    border-radius: 25px; /* Coins arrondis */
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Bordure subtile */
+    background: transparent;
+    color: white;
+    outline: none;
 }
 
 .password-container i {
     position: absolute;
-    right: 60px;
+    right: 5vw; /* Garde un espace relatif */
+    top: 50%; /* Centre l'icône verticalement */
+    transform: translateY(-50%); /* Ajuste le positionnement vertical */
     cursor: pointer;
     color: rgba(255, 255, 255, 0.6);
-    font-size: 18px;
-    transition: color 0.3s ease;
+    font-size: 1.2rem; /* Taille dynamique pour l'icône */
+    transition: color 0.3s ease, font-size 0.3s ease;
 }
 
+/* Effet au survol */
 .password-container i:hover {
-    color: rgba(255, 255, 255, 1); /* Icône devient plus visible */
+    color: rgba(255, 255, 255, 1); /* Change la couleur au survol */
+}
+
+/* Media Queries pour les petits écrans */
+@media screen and (max-width: 768px) {
+    .password-container input {
+        font-size: 0.9rem; /* Réduit la taille du texte */
+        padding: 10px 4vw; /* Ajuste les marges */
+    }
+
+    .password-container i {
+        right: 4vw; /* Réduit l'espace entre l'icône et le bord */
+        font-size: 1rem; /* Réduit la taille de l'icône */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .password-container input {
+        font-size: 0.8rem; /* Taille encore plus petite pour les écrans très étroits */
+        padding: 8px 3vw; /* Réduit encore le padding */
+    }
+
+    .password-container i {
+        right: 3vw; /* Réduction supplémentaire de l'espacement */
+        font-size: 0.9rem; /* Icône plus petite */
+    }
 }
 
 @media (max-width: 768px) {
