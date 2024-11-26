@@ -248,27 +248,33 @@ div.retour img:hover {
 }
 
 .login-container {
-    background-color: rgba(0, 0, 0, 0.5); /* Assurez la lisibilité */
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour la lisibilité */
     padding: 30px;
-    width: 420px;
-    max-width: 90%;  /* Adaptation pour écrans plus petits */
+    width: 500px;
+    max-width: 90%; /* S'adapte aux écrans plus petits */
     height: auto;
     border-radius: 20px;
     border: 2px solid rgba(255, 255, 255, 0.2);
     text-align: center;
     color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Ajout d'une ombre */
+    margin: auto;
 }
 
-/* Autres éléments de la boîte d'authentification */
 .login-container h2 {
     font-size: 32px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Amélioration du contraste */
 }
 
 .login-container input:focus {
+    color: white;
     border-color: rgba(255, 255, 255, 0.6);
     background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); 
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6); /* Plus visible */
 }
+
 .login-container input,
 .login-container button {
     display: block;
@@ -280,22 +286,79 @@ div.retour img:hover {
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
     color: white;
-    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 1s ease; 
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container input {
+    font-size: 16px; /* Amélioration de la lisibilité */
 }
 
 .login-container button {
-    margin-top: 50px;
-    background-color: #B10C1C;
+    margin-top: 20px;
+    background-color: #B10C1C; /* Couleur principale du bouton */
     padding: 15px;
     border-radius: 25px;
     color: white;
     border: none;
     cursor: pointer;
-    transition: 0.5s;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .login-container button:hover {
     transform: scale(1.1);
+    background-color: #D11E2C; /* Changement subtil au survol */
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin: 10px auto;
+}
+
+.password-container input {
+    padding-right: 60px; /* Espace pour l'icône */
+}
+
+.password-container i {
+    position: absolute;
+    right: 60px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.password-container i:hover {
+    color: rgba(255, 255, 255, 1); /* Icône devient plus visible */
+}
+
+@media (max-width: 768px) {
+    .login-container h2 {
+        font-size: 28px;
+    }
+
+    .login-container input,
+    .login-container button {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 20px;
+    }
+
+    .login-container h2 {
+        font-size: 24px;
+    }
+
+    .login-container input,
+    .login-container button {
+        width: 100%;
+        font-size: 14px;
+    }
 }
 
 

@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page du Professeur </title>
     <link rel="stylesheet" href="teacher.css">
+    
+    <script src="https://kit.fontawesome.com/f79850fb33.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -28,11 +30,18 @@
         
         <img src="prof.png" alt="Prof Image" class="prof-image">
         <img src="teacherfond.png" alt="Teacher Background" class="teacher-background">
-        <div class="login-container">
-            <h2>Authentification</h2>
-            <input type="password" id="passwordInput" placeholder="Entrez le mot de passe"  onkeydown="checkEnter(event)">
-            <button onclick="checkPassword()">Se connecter</button>
-        </div>
+        <div id="loginOverlay" class="login-overlay">
+            <img src="prof.png" alt="Prof Image" class="prof-image">
+            <img src="teacherfond.png" alt="Teacher Background" class="teacher-background">
+            <div class="login-container">
+                <h2>Authentification</h2>
+                <div class="password-container">
+                    <i class="fa-solid fa-eye" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+                    <input type="password" id="passwordInput" placeholder="Entrez le mot de passe" onkeydown="checkEnter(event)">
+                </div>
+                <button onclick="checkPassword()">Se connecter</button>
+            </div>
+        </div>        
     </div>
     <section class="content">
         <div class="container" id="container" style="display: none;">

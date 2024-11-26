@@ -64,7 +64,7 @@ section h1 {
 }
 
 .input-box input::placeholder {
-    color: whitesmoke;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .input-box i {
