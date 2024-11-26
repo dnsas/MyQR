@@ -315,8 +315,8 @@ div.retour img:hover {
 
 .password-container input {
     width: 80%; 
-    padding-right: 5vw; 
-    padding: 12px 5vw;
+    padding-right: 8vw; 
+    padding-top: 12px;
     font-size: 1rem; 
     border-radius: 25px; 
     border: 2px solid rgba(255, 255, 255, 0.2); 
@@ -327,7 +327,7 @@ div.retour img:hover {
 
 .password-container i {
     position: absolute;
-    right: 5vw; 
+    right: 6vw; 
     top: 50%; 
     transform: translateY(-50%); 
     cursor: pointer;
@@ -342,27 +342,26 @@ div.retour img:hover {
 }
 
 
-@media screen and (max-width: 768px) {
-    .password-container input {
-        font-size: 0.9rem; 
-        padding: 10px 4vw;
-    }
+@media screen and (max-width: 900px) {
 
+    .password-container input {
+        padding-right: 11vw; 
+    }
+    
     .password-container i {
-        right: 4vw; 
+        right: 9.5vw; 
         font-size: 1rem; 
     }
 }
 
 @media screen and (max-width: 480px) {
     .password-container input {
-        font-size: 0.8rem; 
-        padding: 8px 3vw;
+        padding-right: 11vw; 
     }
-
+    
     .password-container i {
-        right: 3vw; 
-        font-size: 0.9rem; 
+        right: 11vw; 
+        font-size: 1rem; 
     }
 }
 
@@ -371,10 +370,7 @@ div.retour img:hover {
         font-size: 28px;
     }
 
-    .login-container input,
-    .login-container button {
-        width: 90%;
-    }
+
 }
 
 @media (max-width: 480px) {
@@ -388,7 +384,7 @@ div.retour img:hover {
 
     .login-container input,
     .login-container button {
-        width: 100%;
+        width: 80%;
         font-size: 14px;
     }
 }
