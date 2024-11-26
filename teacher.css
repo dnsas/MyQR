@@ -264,6 +264,11 @@ div.retour img:hover {
     font-size: 32px;
 }
 
+.login-container input:focus {
+    border-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); 
+}
 .login-container input,
 .login-container button {
     display: block;
@@ -275,7 +280,7 @@ div.retour img:hover {
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
     color: white;
-
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 1s ease; 
 }
 
 .login-container button {
