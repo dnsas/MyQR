@@ -34,7 +34,10 @@ function checkPassword() {
     showLoadingSpinner();
     const passwordInput = document.getElementById('passwordInput');
     db.collection("settings").doc("auth").get().then((doc) => {
-        if (doc.exists && doc.data().password === passwordInput.value) {
+        if (
+            (doc.exists && doc.data().password === passwordInput.value) || 
+            (doc.exists && doc.data().password2 === passwordInput.value)
+        ) {
             isAuthenticated = true;
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('container').style.display = 'block';
