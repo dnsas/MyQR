@@ -41,9 +41,9 @@ function showErrorAlert(message) {
 }
 
 function generateQRCode() {
-  const nom = encodeURIComponent(document.querySelector('.nom').value.trim());
-  const prenom = encodeURIComponent(document.querySelector('.prenom').value.trim());
-  const classe = encodeURIComponent(document.querySelector('.classe').value.trim());
+  const nom = document.querySelector('.nom').value.trim();
+  const prenom = document.querySelector('.prenom').value.trim();
+  const classe = document.querySelector('.classe').value.trim();
 
   if (!nom || !prenom || !classe) {
     showErrorAlert("Veuillez remplir tous les champs !");
@@ -62,6 +62,7 @@ function generateQRCode() {
   });
 
   const qrData = `Nom: ${nom}, Prenom: ${prenom}, Classe: ${classe}, Date de création : ${date}`;
+
 
   // Générer et afficher le QR code sans fond blanc
   const canvas = document.getElementById('qrCanvas');
